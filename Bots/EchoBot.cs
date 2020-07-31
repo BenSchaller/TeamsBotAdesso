@@ -13,8 +13,16 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            var replyText = $"Echo: {turnContext.Activity.Text}";
-            await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
+            if (turnContext.Activity.Text == "Wie viel Uhr haben wir?")
+            {
+                var replyTime = $"Die aktuelle Uhrzeit ist {DateTime.Now:HH:mm}";
+                await turnContext.SendActivityAsync(MessageFactory.Text(replyTime, replyTime), cancellationToken);
+            }
+            else
+            {
+                var replyText = $"Echo: {turnContext.Activity.Text}";
+                await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
+            }
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
