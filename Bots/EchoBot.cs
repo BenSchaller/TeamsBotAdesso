@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             if (turnContext.Activity.Text == "Wie viel Uhr haben wir")
             {
-                var replyTime = $"Die aktuelle Uhrzeit ist {DateTime.Now:HH:mm}";
+                var replyTime = $"Die aktuelle Uhrzeit ist {DateTime.Now}";
                 await turnContext.SendActivityAsync(MessageFactory.Text(replyTime, replyTime), cancellationToken);
             }
             else
