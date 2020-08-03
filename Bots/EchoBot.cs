@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 
@@ -16,7 +17,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             if (turnContext.Activity.Text == "Uhrzeit")
             {
-                var replyTime = $"Die aktuelle Uhrzeit ist {DateTime.Now}";
+                var replyTime = $"Die aktuelle Uhrzeit ist {DateTime.Now.AddHours(2)}";
                 await turnContext.SendActivityAsync(MessageFactory.Text(replyTime, replyTime), cancellationToken);
             }
             else
@@ -28,7 +29,7 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
-            var welcomeText = "Hello and welcome!";
+            var welcomeText = "Herzlich Willkommen!";
             foreach (var member in membersAdded)
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
