@@ -14,7 +14,7 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            if (turnContext.Activity.Text == "Wie viel Uhr haben wir")
+            if (turnContext.Activity.Text == "Uhrzeit")
             {
                 var replyTime = $"Die aktuelle Uhrzeit ist {DateTime.Now}";
                 await turnContext.SendActivityAsync(MessageFactory.Text(replyTime, replyTime), cancellationToken);
