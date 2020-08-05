@@ -48,7 +48,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             var results = await EchoBotQnA.GetAnswersAsync(turnContext);
             if (results.Any())
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Das Ergebnis des QnA Maker ergab: {0}", results.First().Answer), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text("Das Ergebnis des QnA Maker ergab: " + results.First().Answer), cancellationToken);
             }
             else
             {
