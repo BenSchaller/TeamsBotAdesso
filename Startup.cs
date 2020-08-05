@@ -33,6 +33,14 @@ namespace Microsoft.BotBuilderSamples
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, EchoBot>();
+
+            //Create QnAMaker Endpoint as a Singleton
+            services.AddSingleton(new QnAMakerEndpoint
+            {
+                KnowledgeBaseId = Configuration.GetValue<string>($"QnAKnowledgebaseID"),
+                EndpointKey = Configuration.GetValue<string>($"QnAAuthKey"),
+                Host = Configuration.GetValue<string>($"QnAEndpointHostName")
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,16 +64,6 @@ namespace Microsoft.BotBuilderSamples
             // app.UseHttpsRedirection();
         }
         
-        public void QnAMakerEndpoint(IServiceCollection services)
-        {
-            //Create QnAMaker Endpoint as a Singleton
 
-            services.AddSingleton(new QnAMakerEndpoint
-            {
-                KnowledgeBaseId = Configuration.GetValue<string>($"QnAKnowledgeBaseId"),
-                EndpointKey = Configuration.GetValue<string>($"QnAAuthKey"),
-                Host = Configuration.GetValue<string>($"QnAEndpointHostName")
-            });
-        }
     }
 }
