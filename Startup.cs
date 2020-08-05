@@ -7,6 +7,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Bot.Builder.AI.QnA;
 
 using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Extensions.Hosting;
@@ -53,6 +54,18 @@ namespace Microsoft.BotBuilderSamples
                 });
 
             // app.UseHttpsRedirection();
+        }
+        
+        public void QnAMakerEndpoint(IServiceCollection services)
+        {
+            //Create QnAMaker Endpoint as a Singleton
+
+            services.AddSingleton(new QnAMakerEndpoint
+            {
+                KnowledgeBaseId = Configuration.GetValue<string>($"QnAKnowledgeBaseId"),
+                EndpointKey = Configuration.GetValue<string>($"QnAAuthKey"),
+                Host = Configuration.GetValue<string>($"QnAEndpointHostName")
+            });
         }
     }
 }
