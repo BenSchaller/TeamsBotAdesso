@@ -64,10 +64,11 @@ namespace Microsoft.BotBuilderSamples.Bots
         private static HeroCard GetHeroCardFromQnaResult(string answer)
         {
             string[] heroCardContent = answer.Split(';');
-            string title, buttonDescription, url;
+            string title, buttonDescription, url, imageUrl;
             title = heroCardContent[0];
             buttonDescription = heroCardContent[1];
             url = heroCardContent[2];
+            imageUrl = heroCardContent[3];
 
             HeroCard heroCard = new HeroCard
             {
@@ -79,6 +80,11 @@ namespace Microsoft.BotBuilderSamples.Bots
                 new CardAction() { Value = url, Title = buttonDescription, Type = ActionTypes.OpenUrl }
             };
 
+            heroCard.Images = new List<CardImage>
+            {
+                new CardImage( url = imageUrl)
+            };
+            
             return heroCard;
 
 
