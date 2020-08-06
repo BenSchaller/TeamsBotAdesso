@@ -63,43 +63,63 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         private static HeroCard GetHeroCardFromQnaResult(string answer)
         {
-            var heroCard = new HeroCard();
+            string[] heroCardContent = answer.Split(';');
+            string title, buttonDescription, url;
+            title = heroCardContent[0];
+            buttonDescription = heroCardContent[1];
+            url = heroCardContent[2];
 
-            //XmlTextReader heroCardDocument = new XmlTextReader(answer);
-            //Xml Format:
-            //< Karte name = "heroCard" >
-            //  < title > Chat starten </ title >
-            //  < text > Webside </text >
-            //  < URL > https://support.microsoft.com/de-de/office/starten-und-anheften-von-chats-a864b052-5e4b-4ccf-b046-2e26f40e21b5 </URL>
-            //</ Karte >
-            XmlDocument heroCardDocument = new XmlDocument();
-            heroCardDocument.Load(answer);
-            string[] heroCardContent = new string[2];
-            int arrayCounter = 0;
-
-            foreach (XmlNode node in heroCardDocument.ChildNodes)
+            HeroCard heroCard = new HeroCard
             {
-                heroCardContent[arrayCounter] = node.Attributes[arrayCounter].InnerText;
-                arrayCounter++;
-            }
+                Title = title,
+            };
 
-            var title = heroCardContent[0];
-            var textBtn = heroCardContent[1];
-            var url = heroCardContent[2];
-
-
-
-            //var titleExpr = new Regex(@"/### ([^\\]+)/", RegexOptions.Compiled);
-            //var title = titleExpr.Match(answer).Value;
-
-            heroCard.Title = title;
-            heroCard.Text = answer;
-            heroCard.Buttons = new List<CardAction>()
+            heroCard.Buttons = new List<CardAction>
             {
-                new CardAction() { Value = url, Title = textBtn, Type = ActionTypes.OpenUrl }
+                new CardAction() { Value = url, Title = buttonDescription, Type = ActionTypes.OpenUrl }
             };
 
             return heroCard;
+
+
+
+            //var heroCard = new HeroCard();
+
+            ////XmlTextReader heroCardDocument = new XmlTextReader(answer);
+            ////Xml Format:
+            ////< Karte name = "heroCard" >
+            ////  < title > Chat starten </ title >
+            ////  < text > Webside </text >
+            ////  < URL > https://support.microsoft.com/de-de/office/starten-und-anheften-von-chats-a864b052-5e4b-4ccf-b046-2e26f40e21b5 </URL>
+            ////</ Karte >
+            //XmlDocument heroCardDocument = new XmlDocument();
+            //heroCardDocument.Load(answer);
+            //string[] heroCardContent = new string[2];
+            //int arrayCounter = 0;
+
+            //foreach (XmlNode node in heroCardDocument.ChildNodes)
+            //{
+            //    heroCardContent[arrayCounter] = node.Attributes[arrayCounter].InnerText;
+            //    arrayCounter++;
+            //}
+
+            //var title = heroCardContent[0];
+            //var textBtn = heroCardContent[1];
+            //var url = heroCardContent[2];
+
+
+
+            ////var titleExpr = new Regex(@"/### ([^\\]+)/", RegexOptions.Compiled);
+            ////var title = titleExpr.Match(answer).Value;
+
+            //heroCard.Title = title;
+            //heroCard.Text = answer;
+            //heroCard.Buttons = new List<CardAction>()
+            //{
+            //    new CardAction() { Value = url, Title = textBtn, Type = ActionTypes.OpenUrl }
+            //};
+            //return heroCard;
+
         }
 
 
