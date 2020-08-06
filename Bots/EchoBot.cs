@@ -48,11 +48,11 @@ namespace Microsoft.BotBuilderSamples.Bots
             //Result from QnAMaker?
             if (results.Any())
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Das Ergebnis des QnA Maker ergab: \r" + results.First().Answer), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text("Das Ergebnis des QnA Maker ergab: \r\n" + results.First().Answer), cancellationToken);
             }
             else
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text("QnA Maker hat keine passende Antwort gefunden."), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text("QnA Maker hat überhaupt keine Antwort gefunden."), cancellationToken);
             }
         }
 
