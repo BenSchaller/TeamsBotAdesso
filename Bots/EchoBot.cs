@@ -69,6 +69,7 @@ namespace Microsoft.BotBuilderSamples.Bots
 
             heroCard.Title = title;
             heroCard.Text = answer;
+            heroCard.Buttons.Add(new CardAction());
 
             return heroCard;
         }
