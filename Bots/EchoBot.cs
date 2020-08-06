@@ -69,7 +69,10 @@ namespace Microsoft.BotBuilderSamples.Bots
 
             heroCard.Title = title;
             heroCard.Text = answer;
-            heroCard.Buttons.Add(new CardAction());
+            heroCard.Buttons = new List<CardAction>()
+            {
+                new CardAction() { Value = "Hallo", Title = "Hallo Button" }
+            };
 
             return heroCard;
         }
