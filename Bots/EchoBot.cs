@@ -11,6 +11,7 @@ using Microsoft.Bot.Schema;
 using System.Linq;
 using Microsoft.Bot.Builder.AI.QnA;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -64,14 +65,38 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             var heroCard = new HeroCard();
 
-            var titleExpr = new Regex(@"/### ([^\\]+)/", RegexOptions.Compiled);
-            var title = titleExpr.Match(answer).Value;
+            //XmlTextReader heroCardDocument = new XmlTextReader(answer);
+            //Xml Format:
+            //< Karte name = "heroCard" >
+            //  < title > Chat starten </ title >
+            //  < text > Webside </text >
+            //  < URL > https://support.microsoft.com/de-de/office/starten-und-anheften-von-chats-a864b052-5e4b-4ccf-b046-2e26f40e21b5 </URL>
+            //</ Karte >
+            XmlDocument heroCardDocument = new XmlDocument();
+            heroCardDocument.Load(answer);
+            string[] heroCardContent = new string[2];
+            int arrayCounter = 0;
+
+            foreach (XmlNode node in heroCardDocument.ChildNodes)
+            {
+                heroCardContent[arrayCounter] = node.Attributes[arrayCounter].InnerText;
+                arrayCounter++;
+            }
+
+            var title = heroCardContent[0];
+            var textBtn = heroCardContent[1];
+            var url = heroCardContent[2];
+
+
+
+            //var titleExpr = new Regex(@"/### ([^\\]+)/", RegexOptions.Compiled);
+            //var title = titleExpr.Match(answer).Value;
 
             heroCard.Title = title;
             heroCard.Text = answer;
             heroCard.Buttons = new List<CardAction>()
             {
-                new CardAction() { Value = "http://www.adesso.de", Title = "Hallo Button", Type = ActionTypes.OpenUrl }
+                new CardAction() { Value = url, Title = textBtn, Type = ActionTypes.OpenUrl }
             };
 
             return heroCard;
