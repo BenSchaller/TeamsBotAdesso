@@ -72,7 +72,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             heroCard.Buttons = new List<CardAction>()
             {
                 new CardAction() { Value = "http://www.adesso.de", Title = "Hallo Button", Type = ActionTypes.OpenUrl }
-            }
+            };
 
             return heroCard;
         }
