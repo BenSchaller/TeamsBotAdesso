@@ -34,7 +34,9 @@ namespace Microsoft.BotBuilderSamples
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, EchoBot>();
 
+
             //Create QnAMaker Endpoint as a Singleton
+            //Singleton = Von einer Klasse nur ein Objekt
             services.AddSingleton(new QnAMakerEndpoint
             {
                 KnowledgeBaseId = Configuration.GetValue<string>($"QnAKnowledgebaseID"),

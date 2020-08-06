@@ -17,22 +17,20 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            //if (turnContext.Activity.Text == "Uhrzeit")
-            //{
+
             //    var replyTime = $"Die aktuelle Uhrzeit ist {DateTime.Now.AddHours(2)}";
             //    await turnContext.SendActivityAsync(MessageFactory.Text(replyTime, replyTime), cancellationToken);
-            //}
-            //else
-            //{
-                var replyText = $"Echo: {turnContext.Activity.Text}";
-                await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
-            //}
+
+            //Replies from the Bot - Echo and QnAMaker
+            var replyText = $"Echo: {turnContext.Activity.Text}";
+            await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
             await AccessQnAMaker(turnContext, cancellationToken);
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
+            //Willkommensnachricht beim starten des Bots
             var welcomeText = "Herzlich Willkommen!";
             foreach (var member in membersAdded)
             {
@@ -45,16 +43,19 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         private async Task AccessQnAMaker (ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
+            //Send it to the QnAMaker
             var results = await EchoBotQnA.GetAnswersAsync(turnContext);
+            //Result from QnAMaker?
             if (results.Any())
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Das Ergebnis des QnA Maker ergab: " + results.First().Answer), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text("Das Ergebnis des QnA Maker ergab: \r" + results.First().Answer), cancellationToken);
             }
             else
             {
                 await turnContext.SendActivityAsync(MessageFactory.Text("QnA Maker hat keine passende Antwort gefunden."), cancellationToken);
             }
         }
+
 
         public QnAMaker EchoBotQnA { get; private set; }
         public EchoBot (QnAMakerEndpoint endpoint)
