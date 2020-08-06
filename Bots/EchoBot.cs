@@ -10,6 +10,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using System.Linq;
 using Microsoft.Bot.Builder.AI.QnA;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -49,13 +50,27 @@ namespace Microsoft.BotBuilderSamples.Bots
             if (results.Any())
             {
                 var resultFirst = results.First();
-                var attachment = MessageFactory.Attachment(new HeroCard(resultFirst.Answer).ToAttachment());
+               
+                var attachment = MessageFactory.Attachment(GetHeroCardFromQnaResult(resultFirst.Answer).ToAttachment());
                 await turnContext.SendActivityAsync(attachment, cancellationToken);
             }
             else
             {
                 await turnContext.SendActivityAsync(MessageFactory.Text("QnA Maker hat keine Antwort gefunden."), cancellationToken);
             }
+        }
+
+        private static HeroCard GetHeroCardFromQnaResult(string answer)
+        {
+            var heroCard = new HeroCard();
+
+            var titleExpr = new Regex(@"/### ([^\\]+)/", RegexOptions.Compiled);
+            var title = titleExpr.Match(answer).Value;
+
+            heroCard.Title = title;
+            heroCard.Text = answer;
+
+            return heroCard;
         }
 
 
