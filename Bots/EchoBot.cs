@@ -12,6 +12,12 @@ using System.Linq;
 using Microsoft.Bot.Builder.AI.QnA;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using NuGet.RuntimeModel;
+using Newtonsoft.Json.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -52,7 +58,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             if (results.Any())
             {
                 var resultFirst = results.First();
-               
+
                 var attachment = MessageFactory.Attachment(FillHeroCardArray(resultFirst.Answer).ToAttachment());
                 await turnContext.SendActivityAsync(attachment, cancellationToken);
             }
@@ -64,14 +70,26 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         public static HeroCard FillHeroCardArray(string answer)
         {
-            string[] heroCardContent = answer.Split(';');
-            string title, buttonDescription, url, imageUrl;
-            title = heroCardContent[0];
-            buttonDescription = heroCardContent[1];
-            url = heroCardContent[2];
-            imageUrl = heroCardContent[3];
+            //Read and Parse JSONString to JSONObject
+            var jsonFile = System.IO.File.ReadAllText(answer);
+            var getObjects = JObject.Parse(jsonFile);
+                        
+            //Write JSONObject in String
+            string titleJson, buttonDescriptionJson, urlJson, imageUrlJson;
+            titleJson = (string)getObjects["title"];
+            buttonDescriptionJson = (string)getObjects["buttonDesc"];
+            urlJson = (string)getObjects["url"];
+            imageUrlJson = (string)getObjects["imgUrl"];
 
-            HeroCard heroCard = CreateHeroCardFromArray(title, buttonDescription, url, imageUrl);
+
+            //string[] heroCardContent = answer.Split(';');
+            //string title, buttonDescription, url, imageUrl;
+            //title = heroCardContent[0];
+            //buttonDescription = heroCardContent[1];
+            //url = heroCardContent[2];
+            //imageUrl = heroCardContent[3];
+
+            HeroCard heroCard = CreateHeroCardFromArray(titleJson, buttonDescriptionJson, urlJson, imageUrlJson);
 
             return heroCard;
 
