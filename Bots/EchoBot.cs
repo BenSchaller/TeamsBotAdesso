@@ -70,11 +70,6 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         public static HeroCard FillHeroCardArray(string answer)
         {
-            //Read and Parse JSONString to JSONObject
-            
-            //var getObjects = JObject.Parse(jsonFile);
-
-            //JsonConvert.DeserializeObject(answer);
             var getObjects = JObject.Parse(answer);
 
             //Write JSONObject in String
@@ -84,13 +79,11 @@ namespace Microsoft.BotBuilderSamples.Bots
             urlJson = (string)getObjects["url"];
             imageUrlJson = (string)getObjects["imgUrl"];
 
-
-
-
             HeroCard heroCard = CreateHeroCardFromArray(titleJson, buttonDescriptionJson, urlJson, imageUrlJson);
-
             return heroCard;
         }
+
+
 
         public static HeroCard CreateHeroCardFromArray(string title, string buttonDescription, string url, string imageUrl)
         {
@@ -111,6 +104,7 @@ namespace Microsoft.BotBuilderSamples.Bots
 
             return heroCard;
         }
+         
 
         public QnAMaker EchoBotQnA { get; private set; }
         public EchoBot (QnAMakerEndpoint endpoint)
