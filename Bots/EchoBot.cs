@@ -71,9 +71,12 @@ namespace Microsoft.BotBuilderSamples.Bots
         public static HeroCard FillHeroCardArray(string answer)
         {
             //Read and Parse JSONString to JSONObject
-            var jsonFile = System.IO.File.ReadAllText(answer);
-            var getObjects = JObject.Parse(jsonFile);
-                        
+            
+            //var getObjects = JObject.Parse(jsonFile);
+
+            //JsonConvert.DeserializeObject(answer);
+            var getObjects = JObject.Parse(answer);
+
             //Write JSONObject in String
             string titleJson, buttonDescriptionJson, urlJson, imageUrlJson;
             titleJson = (string)getObjects["title"];
@@ -82,54 +85,11 @@ namespace Microsoft.BotBuilderSamples.Bots
             imageUrlJson = (string)getObjects["imgUrl"];
 
 
-            //string[] heroCardContent = answer.Split(';');
-            //string title, buttonDescription, url, imageUrl;
-            //title = heroCardContent[0];
-            //buttonDescription = heroCardContent[1];
-            //url = heroCardContent[2];
-            //imageUrl = heroCardContent[3];
+
 
             HeroCard heroCard = CreateHeroCardFromArray(titleJson, buttonDescriptionJson, urlJson, imageUrlJson);
 
             return heroCard;
-
-            //var heroCard = new HeroCard();
-
-            ////XmlTextReader heroCardDocument = new XmlTextReader(answer);
-            ////Xml Format:
-            ////< Karte name = "heroCard" >
-            ////  < title > Chat starten </ title >
-            ////  < text > Webside </text >
-            ////  < URL > https://support.microsoft.com/de-de/office/starten-und-anheften-von-chats-a864b052-5e4b-4ccf-b046-2e26f40e21b5 </URL>
-            ////</ Karte >
-            //XmlDocument heroCardDocument = new XmlDocument();
-            //heroCardDocument.Load(answer);
-            //string[] heroCardContent = new string[2];
-            //int arrayCounter = 0;
-
-            //foreach (XmlNode node in heroCardDocument.ChildNodes)
-            //{
-            //    heroCardContent[arrayCounter] = node.Attributes[arrayCounter].InnerText;
-            //    arrayCounter++;
-            //}
-
-            //var title = heroCardContent[0];
-            //var textBtn = heroCardContent[1];
-            //var url = heroCardContent[2];
-
-
-
-            ////var titleExpr = new Regex(@"/### ([^\\]+)/", RegexOptions.Compiled);
-            ////var title = titleExpr.Match(answer).Value;
-
-            //heroCard.Title = title;
-            //heroCard.Text = answer;
-            //heroCard.Buttons = new List<CardAction>()
-            //{
-            //    new CardAction() { Value = url, Title = textBtn, Type = ActionTypes.OpenUrl }
-            //};
-            //return heroCard;
-
         }
 
         public static HeroCard CreateHeroCardFromArray(string title, string buttonDescription, string url, string imageUrl)
