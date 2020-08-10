@@ -47,12 +47,13 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             //Send it to the QnAMaker
             var results = await EchoBotQnA.GetAnswersAsync(turnContext);
+
             //Result from QnAMaker?
             if (results.Any())
             {
                 var resultFirst = results.First();
                
-                var attachment = MessageFactory.Attachment(GetHeroCardFromQnaResult(resultFirst.Answer).ToAttachment());
+                var attachment = MessageFactory.Attachment(FillHeroCardArray(resultFirst.Answer).ToAttachment());
                 await turnContext.SendActivityAsync(attachment, cancellationToken);
             }
             else
@@ -61,7 +62,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             }
         }
 
-        private static HeroCard GetHeroCardFromQnaResult(string answer)
+        public static HeroCard FillHeroCardArray(string answer)
         {
             string[] heroCardContent = answer.Split(';');
             string title, buttonDescription, url, imageUrl;
@@ -70,24 +71,9 @@ namespace Microsoft.BotBuilderSamples.Bots
             url = heroCardContent[2];
             imageUrl = heroCardContent[3];
 
-            HeroCard heroCard = new HeroCard
-            {
-                Title = title,
-            };
+            HeroCard heroCard = CreateHeroCardFromArray(title, buttonDescription, url, imageUrl);
 
-            heroCard.Buttons = new List<CardAction>
-            {
-                new CardAction() { Value = url, Title = buttonDescription, Type = ActionTypes.OpenUrl }
-            };
-
-            heroCard.Images = new List<CardImage>
-            {
-                new CardImage( url = imageUrl)
-            };
-            
             return heroCard;
-
-
 
             //var heroCard = new HeroCard();
 
@@ -128,6 +114,25 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         }
 
+        public static HeroCard CreateHeroCardFromArray(string title, string buttonDescription, string url, string imageUrl)
+        {
+            HeroCard heroCard = new HeroCard
+            {
+                Title = title,
+            };
+
+            heroCard.Buttons = new List<CardAction>
+            {
+                new CardAction() { Value = url, Title = buttonDescription, Type = ActionTypes.OpenUrl }
+            };
+
+            heroCard.Images = new List<CardImage>
+            {
+                new CardImage( url = imageUrl)
+            };
+
+            return heroCard;
+        }
 
         public QnAMaker EchoBotQnA { get; private set; }
         public EchoBot (QnAMakerEndpoint endpoint)
