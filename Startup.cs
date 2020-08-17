@@ -8,9 +8,13 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder.AI.QnA;
+using Microsoft.Bot.Builder.AI.Luis;
 
 using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.Bot.Configuration;
+using System.Net.Mail;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -32,7 +36,7 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, EchoBot>();
+            services.AddTransient<IBot, TeamsBot>();
 
 
             //Create QnAMaker Endpoint as a Singleton
@@ -43,6 +47,24 @@ namespace Microsoft.BotBuilderSamples
                 EndpointKey = Configuration.GetValue<string>($"QnAAuthKey"),
                 Host = Configuration.GetValue<string>($"QnAEndpointHostName")
             });
+
+            var luisApplication = new LuisApplication(
+                Configuration[$"LuisAppId"],
+                Configuration["LuisAPIKey"],
+                (Configuration["LuisAPIHostName"])
+            );
+        
+
+
+        //Create Luis Endpoint as a Singleton
+        services.AddSingleton(new LuisRecognizerOptionsV3(luisApplication)
+            { 
+                PredictionOptions = new Bot.Builder.AI.LuisV3.LuisPredictionOptions 
+                { 
+                    IncludeAllIntents = true, IncludeInstanceData = true 
+                } 
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
