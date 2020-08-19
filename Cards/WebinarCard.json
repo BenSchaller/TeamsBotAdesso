@@ -1,0 +1,24 @@
+{
+  "$schema": "",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "auto",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://www.ksb-ll.de/inhalte/uploads/clickmeetings-webinar-solution-free-health-organisations-hit-covid-19.jpg",
+              "size": "small",
+              "style": "person"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

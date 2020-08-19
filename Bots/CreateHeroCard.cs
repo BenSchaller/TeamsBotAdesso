@@ -1,48 +1,53 @@
 ﻿using Microsoft.Bot.Schema;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace EchoBot.Bots
 {
     public class CreateHeroCard
     {
-        public HeroCard FillHeroCardArray(string answer)
+        public HeroCard FillHeroCard(string answer)
         {
-            var getObjects = JObject.Parse(answer);
+            HeroCard heroCard = JsonConvert.DeserializeObject<HeroCard>(answer);
+            return heroCard;
 
+
+            //var getObjects = JObject.Parse(answer);
             //Write JSONObject in String
-            string title, buttonDescription, buttonUrl, imageUrl;
-            title = (string)getObjects["title"];
-            buttonDescription = (string)getObjects["buttonDesc"];
-            buttonUrl = (string)getObjects["url"];
-            imageUrl = (string)getObjects["imgUrl"];
+            //string title, buttonDescription, buttonUrl, imageUrl;
+            //title = (string)getObjects["title"];
+            //buttonDescription = (string)getObjects["buttonDesc"];
+            //buttonUrl = (string)getObjects["url"];
+            //imageurl = (string)getobjects["imgurl"];
 
-            HeroCard heroCard = CreateHeroCardFromJson(title, buttonDescription, buttonUrl, imageUrl);
-            return heroCard;
+            //HeroCard heroCard = CreateHeroCardFromJson(title, buttonDescription, buttonUrl, imageUrl);
         }
 
 
-        public static HeroCard CreateHeroCardFromJson(string title, string buttonDescription, string buttonUrl, string imageUrl)
-        {
-            HeroCard heroCard = new HeroCard
-            {
-                Title = title,
-            };
+        //public static HeroCard CreateHeroCardFromJson(string title, string buttonDescription, string buttonUrl, string imageUrl)
+        //{
+        //    HeroCard heroCard = new HeroCard
+        //    {
+        //        Title = title,
+        //    };
+        //    heroCard.Buttons = new List<CardAction>
+        //    {
+        //        new CardAction() { Value = buttonUrl, Title = buttonDescription, Type = ActionTypes.OpenUrl }
+        //    };
 
-            heroCard.Buttons = new List<CardAction>
-            {
-                new CardAction() { Value = buttonUrl, Title = buttonDescription, Type = ActionTypes.OpenUrl }
-            };
+        //    heroCard.Images = new List<CardImage>
+        //    {
+        //        new CardImage( buttonUrl = imageUrl)
+        //    };
 
-            heroCard.Images = new List<CardImage>
-            {
-                new CardImage( buttonUrl = imageUrl)
-            };
-
-            return heroCard;
-        }
+        //    return heroCard;
+        //}
     }
 }

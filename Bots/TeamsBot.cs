@@ -21,14 +21,20 @@ namespace Microsoft.BotBuilderSamples.Bots
             var replyText = $"Echo: {turnContext.Activity.Text}";
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
-            //Access the QnAMaker class
-            QnAMakerAccess qnaMaker = new QnAMakerAccess(EchoBotQnA);
-            await qnaMaker.GetRequest(turnContext, cancellationToken);
-
             //Access the Luis class
             LuisAccess luisRouting = new LuisAccess(LuisNavigation);
-            await luisRouting.GetRequest(turnContext, cancellationToken);
+            if (!await luisRouting.GetRequest(turnContext, cancellationToken))
+            {
+                QnAMakerAccess qnaMaker = new QnAMakerAccess(EchoBotQnA);
+                await qnaMaker.GetRequest(turnContext, cancellationToken);
+            }
+            else
+            {
+                await turnContext.SendActivityAsync(MessageFactory.Text("Es wird nun das Formular zur Webinarbuchung erstellt"), cancellationToken);
+
+            }
         }
+
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
@@ -43,13 +49,14 @@ namespace Microsoft.BotBuilderSamples.Bots
             }
         }
 
+
         //Construct connection to Microsoft Cognitive Services
         public LuisRecognizer LuisNavigation { get; private set; }
 
         public QnAMaker EchoBotQnA { get; private set; }
 
 
-        public TeamsBot (LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint)
+        public TeamsBot(LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint)
         {
             //Connects to QnAMakerEnpoint for each turn
             LuisNavigation = new LuisRecognizer(optionsLuis);

@@ -27,7 +27,7 @@ namespace EchoBot.Bots
 
         private async Task AccessQnAMaker(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            // send it to LUIS
+            //Send it to LUIS
 
             //Send it to the QnAMaker
             var results = await EchoBotQnA.GetAnswersAsync(turnContext);
@@ -37,7 +37,7 @@ namespace EchoBot.Bots
             {
                 var resultFirst = results.First();
                 CreateHeroCard heroCard = new CreateHeroCard();
-                var attachment = MessageFactory.Attachment(heroCard.FillHeroCardArray(resultFirst.Answer).ToAttachment());
+                var attachment = MessageFactory.Attachment(heroCard.FillHeroCard(resultFirst.Answer).ToAttachment());
                 await turnContext.SendActivityAsync(attachment, cancellationToken);
             }
             else
