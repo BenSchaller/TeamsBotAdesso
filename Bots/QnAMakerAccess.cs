@@ -18,14 +18,8 @@ namespace EchoBot.Bots
             EchoBotQnA = echoBotQnA;
         }
 
-        public async Task GetRequest(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
-        {
-            await AccessQnAMaker(turnContext, cancellationToken);
 
-        }
-
-
-        private async Task AccessQnAMaker(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        public async Task AccessQnAMaker(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             //Send it to LUIS
 

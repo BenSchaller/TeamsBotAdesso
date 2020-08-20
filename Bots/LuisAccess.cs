@@ -21,10 +21,7 @@ namespace EchoBot.Bots
             this.LuisNavigation = luisNavigation;
         }
 
-        public async Task<bool> GetRequest(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken) =>
-            await GetIntent(turnContext, cancellationToken);
-
-        private async Task<bool> GetIntent(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        public async Task<bool> GetIntent(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             var recognizerResult = await LuisNavigation.RecognizeAsync(turnContext, cancellationToken);
             var topIntent = recognizerResult.GetTopScoringIntent();

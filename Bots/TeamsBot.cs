@@ -10,6 +10,8 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
 using EchoBot.Bots;
+using EchoBot.Cards;
+using Microsoft.Recognizers.Text.NumberWithUnit;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -17,21 +19,21 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            //Returns the raw Context
+            //Returns the raw Context/Echo
             var replyText = $"Echo: {turnContext.Activity.Text}";
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
             //Access the Luis class
             LuisAccess luisRouting = new LuisAccess(LuisNavigation);
-            if (!await luisRouting.GetRequest(turnContext, cancellationToken))
+            if (! await luisRouting.GetIntent(turnContext, cancellationToken))
             {
                 QnAMakerAccess qnaMaker = new QnAMakerAccess(EchoBotQnA);
-                await qnaMaker.GetRequest(turnContext, cancellationToken);
+                await qnaMaker.AccessQnAMaker(turnContext, cancellationToken);
             }
             else
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Es wird nun das Formular zur Webinarbuchung erstellt"), cancellationToken);
-
+                CreateWebinarCard webinarCard = new CreateWebinarCard();
+                await turnContext.SendActivityAsync(MessageFactory.Attachment(webinarCard.GetWebinarCard()));
             }
         }
 

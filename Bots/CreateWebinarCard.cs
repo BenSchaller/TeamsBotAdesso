@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
-using AdaptiveCards;
+using EchoBot.Cards;
 
 
 namespace EchoBot.Bots
 {
     public class CreateWebinarCard
     {
-        AdaptiveCard card = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0));
+        public Attachment GetWebinarCard()
+        {
+            WebinarCard card = new WebinarCard();
+            var webinarCard = card.CreateWebinarCard();
+            return webinarCard;
+        }
     }
 }
