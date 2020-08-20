@@ -17,21 +17,22 @@
               "size": "Medium"
             },
             {
-              "type": "TextBlock",
-              "text": "${body}",
               "isSubtle": true,
+              "text": "${body}",
+              "type": "TextBlock",
               "wrap": true
             },
             {
               "type": "Input.ChoiceSet",
+              "id":  "1",
               "choices": [
                 {
                   "title": "Choice 1",
-                  "value": "Choice 1"
+                  "value": "1"
                 },
                 {
                   "title": "Choice 2",
-                  "value": "Choice 2"
+                  "value": "2"
                 }
               ],
               "placeholder": "Placeholder text"

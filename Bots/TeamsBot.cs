@@ -33,7 +33,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             else
             {
                 CreateWebinarCard webinarCard = new CreateWebinarCard();
-                await turnContext.SendActivityAsync(MessageFactory.Attachment(webinarCard.GetWebinarCard()));
+                await turnContext.SendActivityAsync(MessageFactory.Attachment(webinarCard.GetWebinarCardFromJson()));
             }
         }
 
