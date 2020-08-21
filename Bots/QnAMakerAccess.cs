@@ -34,19 +34,6 @@ namespace EchoBot.Bots
                 CreateHeroCard heroCard = new CreateHeroCard();
 
                 var attachment = MessageFactory.Attachment(heroCard.FillHeroCard(resultFirst.Answer).ToAttachment());
-
-                var getObjects = JObject.Parse(resultFirst.Answer);
-                //Write JSONObject in String
-                string title, buttonDescription, buttonUrl, imageUrl;
-                title = (string)getObjects["Title"];
-                buttonDescription = (string)getObjects["ButtonDescription"];
-                buttonUrl = (string)getObjects["Value"];
-                imageUrl = (string)getObjects["url"];
-                await turnContext.SendActivityAsync(MessageFactory.Text("Titel: ", title), cancellationToken);
-                await turnContext.SendActivityAsync(MessageFactory.Text("buttonDescription: ", buttonDescription), cancellationToken);
-                await turnContext.SendActivityAsync(MessageFactory.Text("buttonUrl: ", buttonUrl), cancellationToken);
-                await turnContext.SendActivityAsync(MessageFactory.Text("imageUrl: ", imageUrl), cancellationToken);
-
                 await turnContext.SendActivityAsync(attachment, cancellationToken);
             }
             else

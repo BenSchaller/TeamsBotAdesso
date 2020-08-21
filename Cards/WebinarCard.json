@@ -14,8 +14,6 @@
       "text": "Folgende Termine sind verfügbar"
     },
     {
-      "type": "Input.ChoiceSet",
-      "id": "1",
       "choices": [
         {
           "title": "24.09.2020",
@@ -26,7 +24,9 @@
           "value": "Choice 2"
         }
       ],
-      "placeholder": "Termine"
+      "id": "1",
+      "placeholder": "Termine",
+      "type": "Input.ChoiceSet"
     }
   ]
 }
