@@ -4,8 +4,10 @@
   "version": "1.2",
   "body": [
     {
+      "size": "Large",
+      "text": "Webinare",
       "type": "TextBlock",
-      "text": "Webinare"
+      "weight": "Bolder"
     },
     {
       "type": "TextBlock",
@@ -13,7 +15,7 @@
     },
     {
       "type": "Input.ChoiceSet",
-      "id": 1,
+      "id": "1",
       "choices": [
         {
           "title": "24.09.2020",
