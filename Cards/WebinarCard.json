@@ -1,7 +1,11 @@
 {
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "type": "AdaptiveCard",
-  "version": "1.0",
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit"
+    }
+  ],
   "body": [
     {
       "type": "ColumnSet",
@@ -24,7 +28,7 @@
             },
             {
               "type": "Input.ChoiceSet",
-              "id":  "1",
+              "id": "1",
               "choices": [
                 {
                   "title": "Choice 1",
@@ -53,10 +57,6 @@
       ]
     }
   ],
-  "actions": [
-    {
-      "type": "Action.Submit",
-      "title": "Submit"
-    }
-  ]
+  "type": "AdaptiveCard",
+  "version": "1.0"
 }

@@ -31,6 +31,7 @@ namespace EchoBot.Bots
             {
                 var resultFirst = results.First();
                 CreateHeroCard heroCard = new CreateHeroCard();
+
                 var attachment = MessageFactory.Attachment(heroCard.FillHeroCard(resultFirst.Answer).ToAttachment());
                 await turnContext.SendActivityAsync(attachment, cancellationToken);
             }
