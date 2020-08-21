@@ -1,62 +1,93 @@
 {
+  "type": "AdaptiveCard",
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "actions": [
-    {
-      "type": "Action.Submit",
-      "title": "Submit"
-    }
-  ],
+  "version": "1.2",
   "body": [
     {
-      "type": "ColumnSet",
-      "columns": [
+      "type": "TextBlock",
+      "text": "Webinare"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Folgende Termine sind verfügbar"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": 1,
+      "choices": [
         {
-          "type": "Column",
-          "width": 2,
-          "items": [
-            {
-              "type": "TextBlock",
-              "text": "${title}",
-              "weight": "Bolder",
-              "size": "Medium"
-            },
-            {
-              "isSubtle": true,
-              "text": "${body}",
-              "type": "TextBlock",
-              "wrap": true
-            },
-            {
-              "type": "Input.ChoiceSet",
-              "id": "1",
-              "choices": [
-                {
-                  "title": "Choice 1",
-                  "value": "1"
-                },
-                {
-                  "title": "Choice 2",
-                  "value": "2"
-                }
-              ],
-              "placeholder": "Placeholder text"
-            }
-          ]
+          "title": "Choice 1",
+          "value": "Choice 1"
         },
         {
-          "type": "Column",
-          "width": 1,
-          "items": [
-            {
-              "type": "Image",
-              "url": "${thumbnailUrl}",
-              "size": "auto"
-            }
-          ]
+          "title": "Choice 2",
+          "value": "Choice 2"
         }
-      ]
+      ],
+      "placeholder": "Termine"
     }
-  ],
-  "type": "AdaptiveCard",
-  "version": "1.0"
+  ]
 }
+//{
+//  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+//  "type": "AdaptiveCard",
+//  "version": "1.0",
+//  "actions": [
+//    {
+//      "type": "Action.Submit",
+//      "title": "Submit"
+//    }
+//  ],
+//  "body": [
+//    {
+//      "type": "ColumnSet",
+//      "columns": [
+//        {
+//          "type": "Column",
+//          "width": 2,
+//          "items": [
+//            {
+//              "type": "TextBlock",
+//              "text": "Webinar buchen",
+//              "weight": "Bolder",
+//              "size": "Medium"
+//            },
+//            {
+//              "isSubtle": true,
+//              "text": "Folgende Termine stehen zur Auswahl:",
+//              "type": "TextBlock",
+//              "wrap": true
+//            },
+//            {
+//              "type": "Input.ChoiceSet",
+//              "id": "1",
+//              "choices": [
+//                {
+//                  "title": "Termin 1",
+//                  "value": "1"
+//                },
+//                {
+//                  "title": "Termin 2",
+//                  "value": "2"
+//                }
+//              ],
+//              "placeholder": "Placeholder text"
+//            }
+//          ]
+//        },
+//        {
+//          "type": "Column",
+//          "width": 1,
+//          "items": [
+//            {
+//              "type": "Image",
+//              "url": "${thumbnailUrl}",
+//              "size": "auto"
+//            }
+//          ]
+//        }
+//      ]
+//    }
+//  ]
+
+//}

@@ -10,7 +10,6 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
 using EchoBot.Bots;
-using EchoBot.Cards;
 using Microsoft.Recognizers.Text.NumberWithUnit;
 
 namespace Microsoft.BotBuilderSamples.Bots

@@ -20,7 +20,7 @@ namespace EchoBot.Bots
             HeroCard heroCard = JsonConvert.DeserializeObject<HeroCard>(answer);
             return heroCard;
 
-
+        
             //    var getObjects = JObject.Parse(answer);
             //    //Write JSONObject in String
             //    string title, buttonDescription, buttonUrl, imageUrl;

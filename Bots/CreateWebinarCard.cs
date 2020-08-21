@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Bot.Schema;
-using EchoBot.Cards;
 using AdaptiveCards;
 using System.IO;
 
