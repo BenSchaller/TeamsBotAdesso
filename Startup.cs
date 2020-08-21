@@ -9,12 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
-
 using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Protocols;
-using Microsoft.Bot.Configuration;
-using System.Net.Mail;
+
 
 namespace Microsoft.BotBuilderSamples
 {

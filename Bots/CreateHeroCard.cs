@@ -1,15 +1,5 @@
-﻿using Microsoft.Bot.Builder;
-using Microsoft.Bot.Schema;
+﻿using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace EchoBot.Bots
 {
