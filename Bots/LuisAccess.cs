@@ -1,6 +1,8 @@
 ﻿using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Schema;
+using System.CodeDom.Compiler;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,18 +18,21 @@ namespace EchoBot.Bots
             this.LuisNavigation = luisNavigation;
         }
 
-        public async Task<bool> GetIntent(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        public async Task<IdentifiedIntent> GetIntent(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             var recognizerResult = await LuisNavigation.RecognizeAsync(turnContext, cancellationToken);
             var topIntent = recognizerResult.GetTopScoringIntent();
+            IdentifiedIntent result = new IdentifiedIntent();
 
             if (topIntent.intent == "Webinar_buchen")
             {
-                return true;
+                result = IdentifiedIntent.WebinarBuchen;
+                return result;
             }
             else
             {
-                return false;
+                result = IdentifiedIntent.None;
+                return result;
             }
         }
     }

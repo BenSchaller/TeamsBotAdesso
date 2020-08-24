@@ -9,6 +9,9 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
 using EchoBot.Bots;
+using System.Linq;
+using System;
+using System.CodeDom.Compiler;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -21,15 +24,18 @@ namespace Microsoft.BotBuilderSamples.Bots
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
             //Access the Luis class
-            LuisAccess luisRouting = new LuisAccess(LuisNavigation);
-            if (! await luisRouting.GetIntent(turnContext, cancellationToken))
+            var luisRouting = new LuisAccess(LuisNavigation);
+
+            //Use IdentifiedIntent class to check if Question
+
+            if (await luisRouting.GetIntent(turnContext, cancellationToken) == IdentifiedIntent.None)
             {
-                QnAMakerAccess qnaMaker = new QnAMakerAccess(EchoBotQnA);
+                var qnaMaker = new QnAMakerAccess(EchoBotQnA);
                 await qnaMaker.AccessQnAMaker(turnContext, cancellationToken);
             }
             else
             {
-                CreateWebinarCard webinarCard = new CreateWebinarCard();
+                var webinarCard = new CreateWebinarCard();
                 await turnContext.SendActivityAsync(MessageFactory.Attachment(webinarCard.GetWebinarCardFromJson()));
             }
         }

@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Bots\LuisAccessResult.cs" />
     <Compile Remove="Cards\WebinarCard.cs" />
   </ItemGroup>
 

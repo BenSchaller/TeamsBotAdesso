@@ -1,7 +1,5 @@
 {
-  "type": "AdaptiveCard",
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-  "version": "1.2",
   "body": [
     {
       "size": "Large",
@@ -28,7 +26,9 @@
       "placeholder": "Termine",
       "type": "Input.ChoiceSet"
     }
-  ]
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.2"
 }
 //{
 //  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",

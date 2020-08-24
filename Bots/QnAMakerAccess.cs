@@ -19,8 +19,6 @@ namespace EchoBot.Bots
 
         public async Task AccessQnAMaker(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            //Send it to LUIS
-
             //Send it to the QnAMaker
             var results = await EchoBotQnA.GetAnswersAsync(turnContext);
 
