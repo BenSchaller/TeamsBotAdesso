@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.9.4" />
     <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.9.2" />
     <PackageReference Include="Microsoft.Bot.Builder.Testing" Version="4.9.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
