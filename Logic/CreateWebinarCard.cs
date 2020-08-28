@@ -21,6 +21,8 @@ namespace EchoBot.Bots
                 ContentType = AdaptiveCard.ContentType,
                 Content = BuildAdaptiveCard()
             };
+
+            //kommentar
             return card;
         }
 

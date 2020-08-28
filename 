@@ -1,0 +1,239 @@
+[33mcommit 534448f27fc64bdcd0733d21b6ba9eaf803d2539[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 28 10:42:36 2020 +0200
+
+    Datenbank Inhalt in Webinar Card V2
+
+[33mcommit aa5e5a3e0b234dc94176536d7cbbc3a5fa15a8a5[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 28 10:23:59 2020 +0200
+
+    Datenbank Inhalt in Webinar Card
+
+[33mcommit 4e07b801131999ca7c24a723c7dd62bcbdcaecf6[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Wed Aug 26 10:33:35 2020 +0200
+
+    Visual studio crash
+
+[33mcommit 0ef1d3669847e8bcfe2743f9dfa3b898d2b0c2a5[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 24 14:10:07 2020 +0200
+
+    Routing mit enum statt bool
+
+[33mcommit 927e7b79c5a4a0b9864e0546ad59992843c258cd[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 21 15:28:56 2020 +0200
+
+    Code formatiert
+
+[33mcommit d75805a9af274e0df4235ff210180434c8709918[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 21 13:40:13 2020 +0200
+
+    Test Inhalt gelöscht
+
+[33mcommit f2953101c16dcfcc5602fb9c8971a3b80c18efb6[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 21 13:33:02 2020 +0200
+
+    Webinar Card leichte anpassungen Layout
+
+[33mcommit 230a6ea5cc421685283ffb019e93d2149357d378[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 21 13:28:29 2020 +0200
+
+    Webinar Card mit Sample Terminen
+
+[33mcommit fc0c02ae9ce9e55fc87b492b132d7083c2e4f9e8[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 21 13:01:42 2020 +0200
+
+    Webinar Card changed
+
+[33mcommit 529988fe5660eda1127259888fa81a03704e7c63[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Aug 21 10:54:16 2020 +0200
+
+    Cards angepasst
+
+[33mcommit 05b3714a7b7b2bcecb55341dbd16962dd476a375[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 20 15:09:32 2020 +0200
+
+    Webinar from JSON
+
+[33mcommit 306f6394e8468e5dce45c54e149353a983b76003[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 20 14:00:01 2020 +0200
+
+    Webinar Adaptivecard with JSON
+
+[33mcommit 8d8fab69af25ef4e20d00c98029d8394f96fa7f3[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 20 10:43:46 2020 +0200
+
+    Webinaradaptive Card
+
+[33mcommit 4399c4639cd13a0661912104a61629bb68c35744[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Wed Aug 19 15:15:48 2020 +0200
+
+    Deserialized JSON + alles in Klassen unterteilt uvm.
+
+[33mcommit 677bd1d6259b7636496530b33b1c9a28d9b4db19[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 17 15:28:26 2020 +0200
+
+    Bot in Klassen unterteilt und Luis implementiert
+
+[33mcommit 610bd96969e52b5527a0ebc2b2a4a10853d4989a[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 10 14:50:48 2020 +0200
+
+    Einige auskommentierte Fragmente gelöscht
+
+[33mcommit b2b1d780cb8b015efeab04698a3377b4c5dc1648[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 10 11:29:03 2020 +0200
+
+    JSON String für HeroCard V2
+
+[33mcommit 28c9e3f5487ac0eae1d8c35b0a18204027ead484[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 10 10:53:45 2020 +0200
+
+    JSON String für HeroCard
+
+[33mcommit d8096cc4d6db2900f3a63466b3fa2e8369eeb9ba[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 10 09:44:22 2020 +0200
+
+    Methoden HeroCard geteilt
+
+[33mcommit 1624987f55fc732812c3a6f276a82164ef865334[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 17:25:21 2020 +0200
+
+    heroCard inkl Image
+
+[33mcommit f50bfbe96c8f3e6e249be247b26625e4978f9d96[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 17:15:00 2020 +0200
+
+    Split mit Semicolon
+
+[33mcommit 2c5479b20195680a879ee6db2e41018e37e13f11[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 16:50:55 2020 +0200
+
+    XML Format
+
+[33mcommit a9bc97284b587379ac145438a7ea055e1c537fb8[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 14:13:34 2020 +0200
+
+    regex for HeroCard V4
+
+[33mcommit a1b3a534e50da0977cfe106b84b223c72599120a[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 14:12:39 2020 +0200
+
+    regex for HeroCard V4
+
+[33mcommit 25f2d043e213f2c776ea94a6ff33d83e11c521f5[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 14:10:37 2020 +0200
+
+    regex for HeroCard V3
+
+[33mcommit 15ea10ccf6737b3e23bfde191d29ea0770746e5d[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 14:06:09 2020 +0200
+
+    regex for HeroCard V2
+
+[33mcommit 4eca729645fbaa307a0db776c911f8f287323c0a[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 14:02:28 2020 +0200
+
+    regex for HeroCard
+
+[33mcommit 7adfa2605cd1ee42bf7a40360d78ccb8b31d0877[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 13:52:36 2020 +0200
+
+    inkl Hero Card
+
+[33mcommit 1dbca4042a81b09e6f7ffa96c0bf79ed3362f763[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 12:21:19 2020 +0200
+
+    App manifest über Teams app Studio eingebaut uns Message geändert
+
+[33mcommit cce60d232123ec3cad412fc7ff9f20422c62d992[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Thu Aug 6 10:19:23 2020 +0200
+
+    Kommentare in Code hinzugefügt und strukturiert
+
+[33mcommit 537042fb4c9320349c7ef29df0ac64b2c98175a9[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Wed Aug 5 12:39:28 2020 +0200
+
+    QnAMaker Implemented V3
+
+[33mcommit fd03e1a7b395d3fe8d28db011f97054739ea3b4c[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Wed Aug 5 12:37:14 2020 +0200
+
+    QnAMaker Implemented V2
+
+[33mcommit a03efd923bf37785e94d261263a7919fda72d1bb[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Wed Aug 5 11:24:08 2020 +0200
+
+    QnAMaker Implemented
+
+[33mcommit 11bc7bb51feb55ef3912ed7b22a579abf8bf408c[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Wed Aug 5 11:04:51 2020 +0200
+
+    Qna package wurde hinzugefügt
+
+[33mcommit 500c8513a74f23fdaf1256c6effe6a5a9756e0a1[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 3 14:17:12 2020 +0200
+
+    Passende Zeitzone und Begrüßung auf Deutsch
+
+[33mcommit f3b6a712f885f3a39292e9d588f6732214ab7b63[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Mon Aug 3 10:47:52 2020 +0200
+
+    Uhrzeit befehl ist nun 'Uhrzeit'
+
+[33mcommit 391ac108b16858f2f3b3107bdbbee0d1ff85ca71[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Jul 31 14:03:24 2020 +0200
+
+    EchoBot inkl Uhrzeit Abfrage v3
+
+[33mcommit df0b912c3088434d53fbcc2900acc7bacb73b3b3[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Jul 31 13:51:52 2020 +0200
+
+    EchoBot inkl Uhrzeit Abfrage v2
+
+[33mcommit 96a56d1248324368cb4363672fa938dfc95e2257[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Jul 31 13:11:36 2020 +0200
+
+    EchoBot inkl Uhrzeit Abfrage
+
+[33mcommit be6d109d8014836995d78119cbdaedb4944883a3[m
+Author: schaller <benedict-vincent.schaller@adesso.de>
+Date:   Fri Jul 31 13:10:30 2020 +0200
+
+    Standart EchoBot
