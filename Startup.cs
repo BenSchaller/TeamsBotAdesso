@@ -11,7 +11,7 @@ using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Extensions.Hosting;
-
+using System.Data.SqlClient;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -50,11 +50,13 @@ namespace Microsoft.BotBuilderSamples
                 Configuration["LuisAPIKey"],
                 (Configuration["LuisAPIHostName"])
             );
-        
 
+            services.AddSingleton(new SqlConnection(Configuration[$"SQLConnectionString"]));
 
-        //Create Luis Endpoint as a Singleton
-        services.AddSingleton(new LuisRecognizerOptionsV3(luisApplication)
+            // Entity Framework Core Database First
+
+            //Create Luis Endpoint as a Singleton
+            services.AddSingleton(new LuisRecognizerOptionsV3(luisApplication)
             { 
                 PredictionOptions = new Bot.Builder.AI.LuisV3.LuisPredictionOptions 
                 { 

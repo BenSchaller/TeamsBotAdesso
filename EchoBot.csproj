@@ -6,8 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Bots\LuisAccessResult.cs" />
-    <Compile Remove="Cards\WebinarCard.cs" />
+    <Compile Remove="Logic\LuisAccessResult.cs" />
   </ItemGroup>
 
   <ItemGroup>
