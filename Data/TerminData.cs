@@ -10,7 +10,7 @@ namespace EchoBot.Data
     {
         public int ID { get; set; }
         public string DatumUndZeit { get; set; }
-        public DateTime Datum  { get; set; }
+        public DateTime Datum { get; set; }
         public TimeSpan Startzeit { get; set; }
         public TimeSpan Endzeit { get; set; }
 

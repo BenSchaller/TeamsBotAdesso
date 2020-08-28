@@ -1,6 +1,6 @@
 {
   "id": "{choiceValue}",
-  "type":  "AdaptiveCard",
+  "type": "AdaptiveCard",
   "title": "{choiceTitle}",
   "value": "{choiceValue}"
 }

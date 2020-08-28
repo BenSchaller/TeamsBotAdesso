@@ -13,11 +13,11 @@ namespace EchoBot.DatabaseAccess
 {
     public class DatabaseConnection
     {
-        public DatabaseConnection() 
+        public DatabaseConnection()
         {
-            
+
         }
-        
+
         public List<TerminData> SqlConnection()
         {
             string sqlConnectionString = "Server=tcp:webinarazuresqldb.database.windows.net,1433;Initial Catalog=WebinarDB;Persist Security Info=False;" +
