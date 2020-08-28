@@ -39,7 +39,7 @@ namespace EchoBot.Bots
             {
                 AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson(choice.Datum.ToString(), choice.ID.ToString()));
                 choiceSet.Choices.Add(choices);
-                
+
             }
             card.Body.Add(choiceSet);
             return card;
