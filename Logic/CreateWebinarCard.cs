@@ -30,19 +30,19 @@ namespace EchoBot.Bots
         {
             var card = AdaptiveCard.FromJson(File.ReadAllText("BusinessLogic\\Cards\\WebinarCard.json")).Card;
 
-            var choicesFromDatabase = new DatabaseConnection();
-            List<TerminData> terminList = new List<TerminData>();
-            terminList = choicesFromDatabase.SqlConnection();
+            //var choicesFromDatabase = new DatabaseConnection();
+            //List<TerminData> terminList = new List<TerminData>();
+            //terminList = choicesFromDatabase.SqlConnection();
             var choiceSet = new AdaptiveChoiceSetInput();
             choiceSet = JsonConvert.DeserializeObject<AdaptiveChoiceSetInput>(File.ReadAllText("BusinessLogic\\Cards\\ChoiceSet.json"));
 
 
-            foreach (var choice in terminList)
-            {
-                AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson(choice.Datum.ToString(), choice.ID.ToString()));
+            //foreach (var choice in terminList)
+            //{
+                AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson("24.02.2020", "1"/*choice.Datum.ToString(), choice.ID.ToString()*/));
                 choiceSet.Choices.Add(choices);
 
-            }
+            //}
             card.Body.Add(choiceSet);
             return card;
         }
@@ -61,6 +61,6 @@ namespace EchoBot.Bots
             return null;
         }
 
-        SqlConnection sqlConnection { get; set; }
+        // SqlConnection sqlConnection { get; set; }
     }
 }

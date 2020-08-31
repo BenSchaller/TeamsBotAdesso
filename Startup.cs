@@ -51,7 +51,7 @@ namespace Microsoft.BotBuilderSamples
                 (Configuration["LuisAPIHostName"])
             );
 
-            services.AddSingleton(new SqlConnection(Configuration[$"SQLConnectionString"]));
+            //services.AddSingleton(new SqlConnection(Configuration[$"SQLConnectionString"]));
 
             // Entity Framework Core Database First
 
