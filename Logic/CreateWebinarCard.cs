@@ -22,28 +22,30 @@ namespace EchoBot.Bots
                 Content = BuildAdaptiveCard()
             };
 
-            //kommentar
             return card;
         }
 
         private AdaptiveCard BuildAdaptiveCard()
         {
             var card = AdaptiveCard.FromJson(File.ReadAllText("BusinessLogic\\Cards\\WebinarCard.json")).Card;
+            
 
-            //var choicesFromDatabase = new DatabaseConnection();
-            //List<TerminData> terminList = new List<TerminData>();
-            //terminList = choicesFromDatabase.SqlConnection();
-            var choiceSet = new AdaptiveChoiceSetInput();
-            choiceSet = JsonConvert.DeserializeObject<AdaptiveChoiceSetInput>(File.ReadAllText("BusinessLogic\\Cards\\ChoiceSet.json"));
+            var choicesFromDatabase = new DatabaseConnection();
+            List<TerminData> terminList = new List<TerminData>();
+            terminList = choicesFromDatabase.SqlConnection();
+            var cs = new AdaptiveChoiceSetInput(); 
+            cs.Id = Guid.NewGuid().ToString();
+            cs.Value = "1";
+           // AdaptiveChoiceSetInput choiceSet = JsonConvert.DeserializeObject<AdaptiveChoiceSetInput>(File.ReadAllText("BusinessLogic\\Cards\\ChoiceSet.json"));
+            
 
+            foreach (var choice in terminList)
+            {
+                AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson(choice.Datum.ToString(), choice.ID.ToString()));
+                cs.Choices.Add(choices);
 
-            //foreach (var choice in terminList)
-            //{
-                AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson("24.02.2020", "1"/*choice.Datum.ToString(), choice.ID.ToString()*/));
-                choiceSet.Choices.Add(choices);
-
-            //}
-            card.Body.Add(choiceSet);
+            }
+            card.Body.Add(cs);
             return card;
         }
 

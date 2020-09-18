@@ -57,11 +57,12 @@ namespace Microsoft.BotBuilderSamples
 
             //Create Luis Endpoint as a Singleton
             services.AddSingleton(new LuisRecognizerOptionsV3(luisApplication)
-            { 
-                PredictionOptions = new Bot.Builder.AI.LuisV3.LuisPredictionOptions 
-                { 
-                    IncludeAllIntents = true, IncludeInstanceData = true 
-                } 
+            {
+                PredictionOptions = new Bot.Builder.AI.LuisV3.LuisPredictionOptions
+                {
+                    IncludeAllIntents = true,
+                    IncludeInstanceData = true
+                }
             });
 
         }
@@ -86,7 +87,7 @@ namespace Microsoft.BotBuilderSamples
 
             // app.UseHttpsRedirection();
         }
-        
+
 
     }
 }

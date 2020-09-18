@@ -19,7 +19,7 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            //Returns the raw Context/Echo
+            //Returns the raw Context/Echo Kommentar
             var replyText = $"Echo: {turnContext.Activity.Text}";
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
