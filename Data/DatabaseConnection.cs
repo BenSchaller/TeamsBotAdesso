@@ -1,4 +1,4 @@
-﻿using EchoBot.Data;
+﻿using TeamsBot.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -9,31 +9,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EchoBot.DatabaseAccess
+namespace TeamsBot.DatabaseAccess
 {
     public class DatabaseConnection
     {
-        public DatabaseConnection()
+
+        public List<TerminData> GetTermineFromSql()
         {
-
-        }
-
-        public List<TerminData> SqlConnection()
-        {
-            string sqlConnectionString = "Server=tcp:webinarazuresqldb.database.windows.net,1433;Initial Catalog=WebinarDB;Persist Security Info=False;" +
-                "User ID=benschaller;Password=Admin1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            SqlConnection sqlConnection = new SqlConnection(sqlConnectionString);
-
-            sqlConnection.Open();
-
-            List<TerminData> termine = GetWebinarTermine(sqlConnection);
-
-            sqlConnection.Close();
+            var sqlConnection = OpenSqlConnection();
+            List<TerminData> termine = WebinarTermine(sqlConnection);
+            CloseSqlConnection(sqlConnection);
 
             return termine;
         }
 
-        public List<TerminData> GetWebinarTermine(SqlConnection sqlConnection)
+
+        public List<TerminData> WebinarTermine(SqlConnection sqlConnection)
         {
             string terminAbfrageString = "Select ID, Datum, StartZeit, EndZeit from dbo.WebinarTermine";
 
@@ -42,14 +33,32 @@ namespace EchoBot.DatabaseAccess
             using (SqlDataReader terminReader = command.ExecuteReader())
             {
                 StringBuilder builder = new StringBuilder();
-                var list = new List<TerminData>();
+                var terminList = new List<TerminData>();
                 while (terminReader.Read())
                 {
-                    list.Add(new TerminData { ID = terminReader.GetInt32(0), Datum = terminReader.GetDateTime(1), Startzeit = terminReader.GetTimeSpan(2), Endzeit = terminReader.GetTimeSpan(3) });
+                    terminList.Add(new TerminData { ID = terminReader.GetInt32(0), Datum = terminReader.GetDateTime(1), Startzeit = terminReader.GetTimeSpan(2), Endzeit = terminReader.GetTimeSpan(3) });
                 }
                 terminReader.Close();
-                return list;
+                return terminList;
             }
         }
+
+
+
+        private SqlConnection OpenSqlConnection()
+        {
+            string sqlConnectionString = "Server=tcp:webinarazuresqldb.database.windows.net,1433;Initial Catalog=WebinarDB;Persist Security Info=False;" +
+             "User ID=benschaller;Password=Admin1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            SqlConnection sqlConnection = new SqlConnection(sqlConnectionString);
+
+            sqlConnection.Open();
+            return sqlConnection;
+        }
+
+        private void CloseSqlConnection(SqlConnection sqlConnection)
+        {
+            sqlConnection.Close();
+        }
+
     }
 }

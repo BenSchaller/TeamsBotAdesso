@@ -6,11 +6,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Newtonsoft.Json;
 using System.Text;
 using System;
-using EchoBot.DatabaseAccess;
-using EchoBot.Data;
+using TeamsBot.DatabaseAccess;
+using TeamsBot.Data;
 using System.Collections.Generic;
 
-namespace EchoBot.Bots
+namespace TeamsBot.Bots
 {
     public class CreateWebinarCard
     {
@@ -30,9 +30,9 @@ namespace EchoBot.Bots
             var card = AdaptiveCard.FromJson(File.ReadAllText("BusinessLogic\\Cards\\WebinarCard.json")).Card;
             
 
-            var choicesFromDatabase = new DatabaseConnection();
+            var webinarTermine = new GetWebinarTermine();
             List<TerminData> terminList = new List<TerminData>();
-            terminList = choicesFromDatabase.SqlConnection();
+            terminList = webinarTermine.GetTermineFromSql();
             var cs = new AdaptiveChoiceSetInput(); 
             cs.Id = Guid.NewGuid().ToString();
             cs.Value = "1";

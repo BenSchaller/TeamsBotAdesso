@@ -1,7 +1,7 @@
 ﻿using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
 
-namespace EchoBot.Bots
+namespace TeamsBot.Bots
 {
     public class CreateHeroCard
     {

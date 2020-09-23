@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EchoBot.Bots
+namespace TeamsBot.Bots
 {
     public class QnAMakerAccess : ActivityHandler
     {

@@ -8,7 +8,7 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
-using EchoBot.Bots;
+using TeamsBot.Bots;
 using System.Linq;
 using System;
 using System.CodeDom.Compiler;

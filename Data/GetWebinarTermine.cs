@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TeamsBot.Bots
+namespace TeamsBot.Data
 {
-    public enum IdentifiedIntent
+    public class GetWebinarTermine
     {
-        None = 0,
-        WebinarBuchen = 1
     }
 }
