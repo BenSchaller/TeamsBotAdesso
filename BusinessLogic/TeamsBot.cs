@@ -12,6 +12,8 @@ using TeamsBot.Bots;
 using System.Linq;
 using System;
 using System.CodeDom.Compiler;
+using TeamsBot.Data;
+using TeamsBot.Logic;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -21,6 +23,10 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             //Returns the raw Context/Echo Kommentar
             var replyText = $"Echo: {turnContext.Activity.Text}";
+
+            UseUserInformation userInformation = new UseUserInformation();
+            userInformation.CreateNewUserEntry();
+
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
             //Access the Luis class

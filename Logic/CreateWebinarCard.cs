@@ -56,13 +56,5 @@ namespace TeamsBot.Bots
             jsonBuilder.Replace("{choiceValue}", choiceValue);
             return jsonBuilder.ToString();
         }
-
-        public string GetChoicesFromSql()
-        {
-
-            return null;
-        }
-
-        // SqlConnection sqlConnection { get; set; }
     }
 }

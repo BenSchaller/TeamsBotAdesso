@@ -16,17 +16,13 @@ namespace TeamsBot.Data
     {
         public MicrosoftTeamUser UserInformation()
         {
-            List<MicrosoftTeamUser> teamUsers = new List<MicrosoftTeamUser>();
-            string email = string.Empty;
-            ConversationMembers conversationMembers = new ConversationMembers();
             ConversationAccount conversationAccount = new ConversationAccount();
-            
-            teamUsers.Add(JsonConvert.DeserializeObject<MicrosoftTeamUser>(conversationAccount.Id));
             
             MicrosoftTeamUser user = new MicrosoftTeamUser{
             ID = conversationAccount.Id,
             Name = conversationAccount.Name,
             };
+
             return user;
         }
     }
