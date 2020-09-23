@@ -26,7 +26,7 @@ namespace EchoBot.Logic
             var sqlConnection = new DatabaseConnection();
             var connection = sqlConnection.OpenSqlConnection();
 
-            string commandString = "Insert Into Webinarteilnehmer VALUES(" + userId + ", " + userName + ")";
+            string commandString = "Insert Into Webinarteilnehmer VALUES('" + userId + "', '" + userName + "')";
             SqlCommand command = new SqlCommand(commandString, connection);
             command.ExecuteNonQuery();
 
