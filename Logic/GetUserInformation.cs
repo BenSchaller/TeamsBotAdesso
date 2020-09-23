@@ -6,11 +6,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Newtonsoft.Json;
 using System.Text;
 using System;
-using TeamsBot.DatabaseAccess;
-using TeamsBot.Data;
+using EchoBot.DatabaseAccess;
+using EchoBot.Data;
 using System.Collections.Generic;
 
-namespace TeamsBot.Data
+namespace EchoBot.Data
 {
     public class GetUserInformation
     {

@@ -1,12 +1,12 @@
-﻿using TeamsBot.Data;
+﻿using EchoBot.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TeamsBot.DatabaseAccess;
+using EchoBot.DatabaseAccess;
 using System.Data.SqlClient;
 
-namespace TeamsBot.Logic
+namespace EchoBot.Logic
 {
     public class UseUserInformation
     {

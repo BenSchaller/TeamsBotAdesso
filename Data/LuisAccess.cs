@@ -1,4 +1,4 @@
-﻿using TeamsBot.DatabaseAccess;
+﻿using EchoBot.DatabaseAccess;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Schema;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TeamsBot.Bots
+namespace EchoBot.Bots
 {
     public class LuisAccess
     {

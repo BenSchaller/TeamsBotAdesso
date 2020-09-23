@@ -8,16 +8,16 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
-using TeamsBot.Bots;
+using EchoBot.Bots;
 using System.Linq;
 using System;
 using System.CodeDom.Compiler;
-using TeamsBot.Data;
-using TeamsBot.Logic;
+using EchoBot.Data;
+using EchoBot.Logic;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
-    public class EchoBot : ActivityHandler
+    public class TeamsBot : ActivityHandler
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
@@ -67,7 +67,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         public QnAMaker EchoBotQnA { get; private set; }
 
 
-        public EchoBot(LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint)
+        public TeamsBot(LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint)
         {
             //Connects to QnAMakerEnpoint for each turn
             LuisNavigation = new LuisRecognizer(optionsLuis);

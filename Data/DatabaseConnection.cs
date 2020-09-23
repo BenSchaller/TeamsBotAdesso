@@ -1,4 +1,4 @@
-﻿using TeamsBot.Data;
+﻿using EchoBot.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamsBot.DatabaseAccess
+namespace EchoBot.DatabaseAccess
 {
     public class DatabaseConnection
     {

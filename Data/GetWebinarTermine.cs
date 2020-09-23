@@ -4,10 +4,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TeamsBot.Data;
-using TeamsBot.DatabaseAccess;
+using EchoBot.Data;
+using EchoBot.DatabaseAccess;
 
-namespace TeamsBot.Data
+namespace EchoBot.Data
 {
     public class GetWebinarTermine
     {
