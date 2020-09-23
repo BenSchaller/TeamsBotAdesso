@@ -17,7 +17,7 @@ using TeamsBot.Logic;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
-    public class TeamsBot : ActivityHandler
+    public class EchoBot : ActivityHandler
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
@@ -67,7 +67,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         public QnAMaker EchoBotQnA { get; private set; }
 
 
-        public TeamsBot(LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint)
+        public EchoBot(LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint)
         {
             //Connects to QnAMakerEnpoint for each turn
             LuisNavigation = new LuisRecognizer(optionsLuis);
