@@ -13,11 +13,6 @@ namespace EchoBot.Logic
     {
         public void CreateNewUserEntry(TeamsChannelAccount member)
         {
-            //var userInformation = new GetUserInformation();
-            //var userInformationList = userInformation.UserInformation();
-
-            
-
             string userId = member.Email;
             string userName = member.Name;
 
@@ -28,13 +23,19 @@ namespace EchoBot.Logic
         {
             var sqlConnection = new DatabaseConnection();
             var connection = sqlConnection.OpenSqlConnection();
-
-            string commandString = "Insert Into Webinarteilnehmer VALUES('" + userId + "', '" + userName + "')";
-            SqlCommand command = new SqlCommand(commandString, connection);
-            command.ExecuteNonQuery();
+            
+            string selectString = "Select * from Webinarteilnehmer where MailAdresse = " + userId;
+            SqlCommand selectCommand = new SqlCommand(selectString, connection);
+            var result = selectCommand.ExecuteReader();
+            
+            if(result.FieldCount == 0)
+            {
+                string commandString = "Insert Into Webinarteilnehmer VALUES('" + userId + "', '" + userName + "')";
+                SqlCommand command = new SqlCommand(commandString, connection);
+                command.ExecuteNonQuery();
+            }
 
             sqlConnection.CloseSqlConnection(connection);
-
         }
     }
 }

@@ -45,7 +45,6 @@ namespace Microsoft.BotBuilderSamples.Bots
                 await turnContext.SendActivityAsync(MessageFactory.Attachment(webinarCard.GetWebinarCardFromJson()));
                 var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
                 userInformation.CreateNewUserEntry(member);
-
             }
         }
 
