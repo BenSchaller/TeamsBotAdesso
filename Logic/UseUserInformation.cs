@@ -28,7 +28,7 @@ namespace EchoBot.Logic
             SqlCommand selectCommand = new SqlCommand(selectString, connection);
             var result = selectCommand.ExecuteReader();
             
-            if(result.FieldCount == 0)
+            if(result == null)
             {
                 string commandString = "Insert Into Webinarteilnehmer VALUES('" + userId + "', '" + userName + "')";
                 SqlCommand command = new SqlCommand(commandString, connection);
