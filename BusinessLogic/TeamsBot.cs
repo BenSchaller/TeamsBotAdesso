@@ -14,6 +14,7 @@ using System;
 using System.CodeDom.Compiler;
 using EchoBot.Data;
 using EchoBot.Logic;
+using Microsoft.Bot.Builder.Teams;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -25,7 +26,6 @@ namespace Microsoft.BotBuilderSamples.Bots
             var replyText = $"Echo: {turnContext.Activity.Text}";
 
             UseUserInformation userInformation = new UseUserInformation();
-            userInformation.CreateNewUserEntry();
 
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
@@ -43,6 +43,9 @@ namespace Microsoft.BotBuilderSamples.Bots
             {
                 var webinarCard = new CreateWebinarCard();
                 await turnContext.SendActivityAsync(MessageFactory.Attachment(webinarCard.GetWebinarCardFromJson()));
+                var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+                userInformation.CreateNewUserEntry(member);
+
             }
         }
 

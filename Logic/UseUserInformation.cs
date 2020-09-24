@@ -5,18 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using EchoBot.DatabaseAccess;
 using System.Data.SqlClient;
+using Microsoft.Bot.Schema.Teams;
 
 namespace EchoBot.Logic
 {
     public class UseUserInformation
     {
-        public void CreateNewUserEntry()
+        public void CreateNewUserEntry(TeamsChannelAccount member)
         {
-            var userInformation = new GetUserInformation();
-            var userInformationList = userInformation.UserInformation();
+            //var userInformation = new GetUserInformation();
+            //var userInformationList = userInformation.UserInformation();
 
-            string userId = userInformationList.ID;
-            string userName = userInformationList.Name;
+            
+
+            string userId = member.Email;
+            string userName = member.Name;
 
             UpdateSqlDb(userId, userName);
         }

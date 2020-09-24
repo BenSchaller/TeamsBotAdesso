@@ -9,6 +9,8 @@ using System;
 using EchoBot.DatabaseAccess;
 using EchoBot.Data;
 using System.Collections.Generic;
+using Microsoft.Bot.Schema.Teams;
+using Microsoft.Bot.Builder.Teams;
 
 namespace EchoBot.Data
 {
@@ -17,10 +19,14 @@ namespace EchoBot.Data
         public MicrosoftTeamUser UserInformation()
         {
             ConversationAccount conversationAccount = new ConversationAccount();
+            ConversationMembers conversationMembers = new ConversationMembers();
+            
+            ChannelAccount channelAccount = new ChannelAccount();
+            
             
             MicrosoftTeamUser user = new MicrosoftTeamUser{
-            ID = conversationAccount.Id,
-            Name = conversationAccount.Name,
+            ID = channelAccount.Id,
+            Name = channelAccount.Name,
             };
 
             return user;
