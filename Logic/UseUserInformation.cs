@@ -26,12 +26,13 @@ namespace EchoBot.Logic
             
             string selectString = "Select * from Webinarteilnehmer where MailAdresse = " + userId;
             SqlCommand selectCommand = new SqlCommand(selectString, connection);
-            var result = selectCommand.ExecuteReader();
+            SqlDataReader result = selectCommand.ExecuteReader();
             
             if(result == null)
             {
                 string commandString = "Insert Into Webinarteilnehmer VALUES('" + userId + "', '" + userName + "')";
                 SqlCommand command = new SqlCommand(commandString, connection);
+
                 command.ExecuteNonQuery();
             }
 
