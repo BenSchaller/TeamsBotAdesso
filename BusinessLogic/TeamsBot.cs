@@ -23,7 +23,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             //Returns the raw Context/Echo Kommentar
-            var replyText = $"Echo: {turnContext.Activity.Text}";
+            var replyText = turnContext.Activity.Text;
 
             UseUserInformation userInformation = new UseUserInformation();
 

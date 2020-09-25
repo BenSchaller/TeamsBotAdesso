@@ -29,13 +29,21 @@
               "type": "messageBack",
               "displayText": "ChoiceSet.Value",
               "text": "text to bots",
-              "value": "Cancel"
-            }
+              "value": { "property": "Cancel" }
           }
         },
         {
           "type": "Action.Submit",
-          "title": "Abbrechen"
+          "title": "Abbrechen",
+          "data": {
+            "msteams": {
+              "type": "messageBack",
+              "displayText": "ChoiceSet.Value",
+              "text": "text to bots",
+              "value": "Cancel"
+            }
+          }
+
         }
       ]
     }
