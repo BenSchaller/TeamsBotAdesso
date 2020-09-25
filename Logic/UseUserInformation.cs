@@ -13,24 +13,24 @@ namespace EchoBot.Logic
     {
         public void CreateNewUserEntry(TeamsChannelAccount member)
         {
-            string userId = member.Email;
+            string userMail = member.Email;
             string userName = member.Name;
 
-            UpdateSqlDb(userId, userName);
+            UpdateSqlDb(userMail, userName);
         }
 
-        public void UpdateSqlDb(string userId, string userName)
+        public void UpdateSqlDb(string userMail, string userName)
         {
             var sqlConnection = new DatabaseConnection();
             var connection = sqlConnection.OpenSqlConnection();
 
-            string selectString = "Select MailAdresse from Webinarteilnehmer where MailAdresse = '" + userId + "'";
+            string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR, MailAdresse) = '" + userMail + "'";
             SqlCommand selectUserByMailCmd = new SqlCommand(selectString, connection);
             var result = selectUserByMailCmd.ExecuteReader();
 
             if (result.HasRows)
             {
-                string insertString = "Insert Into Webinarteilnehmer VALUES('" + userName + "', '" + userId + "')";
+                string insertString = "Insert Into Webinarteilnehmer VALUES('" + userName + "', '" + userMail + "')";
                 SqlCommand insertUserCmd = new SqlCommand(insertString, connection);
 
                 insertUserCmd.ExecuteNonQuery();
