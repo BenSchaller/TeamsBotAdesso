@@ -23,18 +23,15 @@ namespace EchoBot.Logic
         {
             var sqlConnection = new DatabaseConnection();
             var connection = sqlConnection.OpenSqlConnection();
-            
-            string selectString = "Select * from Webinarteilnehmer where MailAdresse = " + userId;
+
+            string selectString = "Select * from Webinarteilnehmer where MailAdresse = '" + userId + "'";
             SqlCommand selectUserByMailCmd = new SqlCommand(selectString, connection);
             SqlDataReader result = selectUserByMailCmd.ExecuteReader();
-            
-            //if(result.HasRows)
-            //{
-                string commandString = "Insert Into Webinarteilnehmer VALUES('" + userId + "', '" + userName + "')";
-                SqlCommand insertUserCmd = new SqlCommand(commandString, connection);
 
-                insertUserCmd.ExecuteNonQuery();
-            //}
+            string insertString = "Insert Into Webinarteilnehmer VALUES('" + userName + "', '" + userId + "')";
+            SqlCommand insertUserCmd = new SqlCommand(insertString, connection);
+
+            insertUserCmd.ExecuteNonQuery();
 
             sqlConnection.CloseSqlConnection(connection);
         }
