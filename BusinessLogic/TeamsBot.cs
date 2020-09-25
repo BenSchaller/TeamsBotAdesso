@@ -9,10 +9,6 @@ using Microsoft.Bot.Schema;
 using Microsoft.Bot.Builder.AI.QnA;
 using Microsoft.Bot.Builder.AI.Luis;
 using EchoBot.Bots;
-using System.Linq;
-using System;
-using System.CodeDom.Compiler;
-using EchoBot.Data;
 using EchoBot.Logic;
 using Microsoft.Bot.Builder.Teams;
 
@@ -23,11 +19,11 @@ namespace Microsoft.BotBuilderSamples.Bots
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             //Returns the raw Context/Echo Kommentar
-            var replyText = turnContext.Activity.Text;
+            //var replyText = turnContext.Activity.Text;
 
             UseUserInformation userInformation = new UseUserInformation();
 
-            await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
+            //await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
             //Access the Luis class
             var luisRouting = new LuisAccess(LuisNavigation);

@@ -29,21 +29,21 @@
               "type": "messageBack",
               "displayText": "ChoiceSet.Value",
               "text": "text to bots",
-              "value": { "property": "Cancel" }
-          }
-        },
-        {
-          "type": "Action.Submit",
-          "title": "Abbrechen",
-          "data": {
-            "msteams": {
-              "type": "messageBack",
-              "displayText": "ChoiceSet.Value",
-              "text": "text to bots",
               "value": "Cancel"
             }
           }
-
+        },
+        {
+          "title": "Abbrechen",
+          "type": "Action.Submit",
+          "data": {
+            "msteams": {
+              "displayText": "ChoiceSet.Value",
+              "text": "text to bots",
+              "type": "messageBack",
+              "value": "Cancel"
+            }
+          }
         }
       ]
     }
@@ -88,7 +88,7 @@
 //              "action":  "sendtodb"
 //            }
 //          }
-          
+
 //        ],
 //        "actions": [
 //          {
