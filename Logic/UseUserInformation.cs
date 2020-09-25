@@ -24,7 +24,7 @@ namespace EchoBot.Logic
             var sqlConnection = new DatabaseConnection();
             var connection = sqlConnection.OpenSqlConnection();
 
-            string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR, MailAdresse) = '" + userMail + "'";
+            string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR, Name) = '" + userName + "'";
             SqlCommand selectUserByMailCmd = new SqlCommand(selectString, connection);
             var result = selectUserByMailCmd.ExecuteReader();
 
