@@ -24,9 +24,9 @@ namespace EchoBot.Logic
             var sqlConnection = new DatabaseConnection();
             var connection = sqlConnection.OpenSqlConnection();
 
-            string selectString = "Select * from Webinarteilnehmer where MailAdresse = '" + userId + "'";
-            SqlCommand selectUserByMailCmd = new SqlCommand(selectString, connection);
-            SqlDataReader result = selectUserByMailCmd.ExecuteReader();
+            //string selectString = "Select * from Webinarteilnehmer where MailAdresse = '" + userId + "'";
+            //SqlCommand selectUserByMailCmd = new SqlCommand(selectString, connection);
+            //SqlDataReader result = selectUserByMailCmd.ExecuteReader();
 
             string insertString = "Insert Into Webinarteilnehmer VALUES('" + userName + "', '" + userId + "')";
             SqlCommand insertUserCmd = new SqlCommand(insertString, connection);
