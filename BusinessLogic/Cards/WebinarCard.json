@@ -27,7 +27,7 @@
           "data": {
             "msteams": {
               "type": "messageBack",
-              "displayText": "I clicked this button",
+              "displayText": "ChoiceSet.Value",
               "text": "text to bots",
               "value": "Cancel"
             }
