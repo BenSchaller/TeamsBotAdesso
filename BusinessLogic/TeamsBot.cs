@@ -11,6 +11,7 @@ using Microsoft.Bot.Builder.AI.Luis;
 using EchoBot.Bots;
 using EchoBot.Logic;
 using Microsoft.Bot.Builder.Teams;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -21,6 +22,25 @@ namespace Microsoft.BotBuilderSamples.Bots
             //Returns the raw Context/Echo Kommentar
 
             UseUserInformation userInformation = new UseUserInformation();
+            switch (turnContext.Activity.ToString())
+            {
+                case ActivityTypes.Message:
+                    var token = JToken.Parse(turnContext.Activity.ChannelData.ToString());
+                    string buttonClickedOnWebinarCard = "";
+                    if (System.Convert.ToBoolean(token["postback"].Value<string>()))
+                    {
+                        JToken commandToken = JToken.Parse(turnContext.Activity.Value.ToString());
+                        string command = commandToken["action"].Value<string>();
+
+                        if (command.ToLowerInvariant() == "submit")
+                        {
+                            buttonClickedOnWebinarCard = commandToken["choiceset"].Value<string>();
+                        }
+                    }
+                    await turnContext.SendActivityAsync($"You Selected {buttonClickedOnWebinarCard}", cancellationToken: cancellationToken);
+                    break;
+            };
+
 
             //await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 

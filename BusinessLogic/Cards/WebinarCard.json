@@ -25,24 +25,14 @@
           "type": "Action.Submit",
           "title": "Buchen",
           "data": {
-            "msteams": {
-              "type": "messageBack",
-              "displayText": "ChoiceSet.Value",
-              "text": "text to bots",
-              "value": "Book"
-            }
+            "action": "book"
           }
         },
         {
           "title": "Abbrechen",
           "type": "Action.Submit",
           "data": {
-            "msteams": {
-              "displayText": "ChoiceSet.Value",
-              "text": "text to bots",
-              "type": "messageBack",
-              "value": "Cancel"
-            }
+            "action": "break"
           }
         }
       ]
