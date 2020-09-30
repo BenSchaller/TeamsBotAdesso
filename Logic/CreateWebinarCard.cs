@@ -36,12 +36,14 @@ namespace EchoBot.Bots
             var cs = new AdaptiveChoiceSetInput(); 
             cs.Id = Guid.NewGuid().ToString();
             cs.Value = "1";
+            
            // AdaptiveChoiceSetInput choiceSet = JsonConvert.DeserializeObject<AdaptiveChoiceSetInput>(File.ReadAllText("BusinessLogic\\Cards\\ChoiceSet.json"));
             
 
             foreach (var choice in terminList)
             {
                 AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson(choice.Datum.ToString(), choice.ID.ToString()));
+                
                 cs.Choices.Add(choices);
 
             }

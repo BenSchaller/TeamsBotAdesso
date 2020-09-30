@@ -37,7 +37,7 @@ namespace EchoBot.Logic
             //}
 
 
-            sqlConnection.CloseSqlConnection(connection);
+            sqlConnection.CloseSqlConnection();
         }
     }
 }

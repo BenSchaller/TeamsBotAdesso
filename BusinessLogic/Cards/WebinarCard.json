@@ -29,7 +29,7 @@
               "type": "messageBack",
               "displayText": "ChoiceSet.Value",
               "text": "text to bots",
-              "value": "Cancel"
+              "value": "Book"
             }
           }
         },

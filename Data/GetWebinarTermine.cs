@@ -18,7 +18,7 @@ namespace EchoBot.Data
 
             List<TerminData> termine = WebinarTermine(sqlConnection);
 
-            connection.CloseSqlConnection(sqlConnection);
+            connection.CloseSqlConnection();
 
             return termine;
         }

@@ -19,7 +19,6 @@ namespace Microsoft.BotBuilderSamples.Bots
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             //Returns the raw Context/Echo Kommentar
-            //var replyText = turnContext.Activity.Text;
 
             UseUserInformation userInformation = new UseUserInformation();
 
@@ -38,13 +37,25 @@ namespace Microsoft.BotBuilderSamples.Bots
             else
             {
                 var webinarCard = new CreateWebinarCard();
-                await turnContext.SendActivityAsync(MessageFactory.Attachment(webinarCard.GetWebinarCardFromJson()));
+                var card = webinarCard.GetWebinarCardFromJson();
+                
+                await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
+
                 
                 var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
                 userInformation.CreateNewUserEntry(member);
             }
         }
 
+        protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
+        {
+            await turnContext.SendActivityAsync(MessageFactory.Text("Ich bin nun in der Eventhandler Klasse"));
+        }
+
+        //public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
+        //{
+        //    string str = "peter";
+        //}
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
@@ -58,6 +69,8 @@ namespace Microsoft.BotBuilderSamples.Bots
                 }
             }
         }
+
+        
 
 
         //Construct connection to Microsoft Cognitive Services

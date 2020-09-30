@@ -13,20 +13,23 @@ namespace EchoBot.DatabaseAccess
 {
     public class DatabaseConnection
     {
-        public SqlConnection OpenSqlConnection()
+        private SqlConnection sqlConnection;
+        public DatabaseConnection()
         {
             string sqlConnectionString = "Server=tcp:webinarazuresqldb.database.windows.net,1433;Initial Catalog=WebinarDB;Persist Security Info=False;" +
-             "User ID=benschaller;Password=Admin1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            SqlConnection sqlConnection = new SqlConnection(sqlConnectionString);
-
+            "User ID=benschaller;Password=Admin1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            
+            sqlConnection = new SqlConnection(sqlConnectionString);
+        }
+        public SqlConnection OpenSqlConnection()
+        {
             sqlConnection.Open();
             return sqlConnection;
         }
 
-        public void CloseSqlConnection(SqlConnection sqlConnection)
+        public void CloseSqlConnection()
         {
             sqlConnection.Close();
         }
-
     }
 }
