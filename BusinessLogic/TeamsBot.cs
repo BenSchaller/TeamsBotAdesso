@@ -12,6 +12,7 @@ using EchoBot.Bots;
 using EchoBot.Logic;
 using Microsoft.Bot.Builder.Teams;
 using Newtonsoft.Json.Linq;
+using AdaptiveCards;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -19,63 +20,115 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
+            ////Returns the raw Context/Echo Kommentar
+
+            //UseUserInformation userInformation = new UseUserInformation();
+
+            //var activity = turnContext.Activity;
+            //if(string.IsNullOrEmpty(activity.Text) && activity.Value!= null)
+            //{
+            //    await turnContext.SendActivityAsync(MessageFactory.Text("Schreib das hier"), cancellationToken);
+            //}
+
+            ////await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
+
+            ////Access the Luis class
+            //var luisRouting = new LuisAccess(LuisNavigation);
+
+            ////Use IdentifiedIntent class to check if Question
+
+            //if (await luisRouting.GetIntent(turnContext, cancellationToken) == IdentifiedIntent.None)
+            //{
+            //    var qnaMaker = new QnAMakerAccess(EchoBotQnA);
+            //    await qnaMaker.AccessQnAMaker(turnContext, cancellationToken);
+            //}
+            //else
+            //{
+            //    var webinarCard = new CreateWebinarCard();
+            //    var card = webinarCard.GetWebinarCardFromJson();
+
+            //    await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
+
+
+            //    var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+            //    userInformation.CreateNewUserEntry(member);
+            //}
+        }
+
+        public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
+        {
             //Returns the raw Context/Echo Kommentar
 
             UseUserInformation userInformation = new UseUserInformation();
-            switch (turnContext.Activity.ToString())
-            {
-                case ActivityTypes.Message:
-                    var token = JToken.Parse(turnContext.Activity.ChannelData.ToString());
-                    string buttonClickedOnWebinarCard = "";
-                    if (System.Convert.ToBoolean(token["postback"].Value<string>()))
-                    {
-                        JToken commandToken = JToken.Parse(turnContext.Activity.Value.ToString());
-                        string command = commandToken["action"].Value<string>();
 
-                        if (command.ToLowerInvariant() == "submit")
+            var activity = turnContext.Activity;
+            switch (turnContext.Activity.Type)
+            {
+                case ActivityTypes.ConversationUpdate:
+                    var welcomeText = "Herzlich Willkommen!";
+                    IList<ChannelAccount> membersAdded = new List<ChannelAccount>();
+                    foreach (var member in membersAdded)
+                    {
+                        if (member.Id != turnContext.Activity.Recipient.Id)
                         {
-                            buttonClickedOnWebinarCard = commandToken["choiceset"].Value<string>();
+                            await turnContext.SendActivityAsync(MessageFactory.Text(welcomeText, welcomeText), cancellationToken);
                         }
                     }
-                    await turnContext.SendActivityAsync($"You Selected {buttonClickedOnWebinarCard}", cancellationToken: cancellationToken);
                     break;
+
+                case ActivityTypes.Message:
+
+                    if (activity.Text != null && activity.Value == null)
+                    {
+                        //Access the Luis class
+                        var luisRouting = new LuisAccess(LuisNavigation);
+
+                        //Use IdentifiedIntent class to check if Question
+
+                        if (await luisRouting.GetIntent(turnContext, cancellationToken) == IdentifiedIntent.None)
+                        {
+                            var qnaMaker = new QnAMakerAccess(EchoBotQnA);
+                            await qnaMaker.AccessQnAMaker(turnContext, cancellationToken);
+                        }
+                        else
+                        {
+                            var webinarCard = new CreateWebinarCard(turnContext);
+                            var card = webinarCard.GetWebinarCardFromJson();
+
+                            await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
+
+
+                            var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+                            userInformation.CreateNewUserEntry(member);
+                        }
+
+                        break;
+
+                    }
+                    else if (string.IsNullOrEmpty(activity.Text) && activity.Value != null)
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Ich bin nun im Buchungszweig"), cancellationToken);
+                        var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+
+                        ConnectUserWithTermin connectUser = new ConnectUserWithTermin();
+                        connectUser.WriteInConnectionTable(member);
+
+                        break;
+                    }
+                    else
+                    {
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Es gab einen Fehler..."), cancellationToken);
+
+                        break;
+                    }
+
             };
-
-
-            //await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
-
-            //Access the Luis class
-            var luisRouting = new LuisAccess(LuisNavigation);
-
-            //Use IdentifiedIntent class to check if Question
-
-            if (await luisRouting.GetIntent(turnContext, cancellationToken) == IdentifiedIntent.None)
-            {
-                var qnaMaker = new QnAMakerAccess(EchoBotQnA);
-                await qnaMaker.AccessQnAMaker(turnContext, cancellationToken);
-            }
-            else
-            {
-                var webinarCard = new CreateWebinarCard();
-                var card = webinarCard.GetWebinarCardFromJson();
-                
-                await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
-
-                
-                var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-                userInformation.CreateNewUserEntry(member);
-            }
         }
 
-        protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
-        {
-            await turnContext.SendActivityAsync(MessageFactory.Text("Ich bin nun in der Eventhandler Klasse"));
-        }
+        //await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
 
-        //public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
-        //{
-        //    string str = "peter";
-        //}
+
+
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
@@ -90,7 +143,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             }
         }
 
-        
+
 
 
         //Construct connection to Microsoft Cognitive Services

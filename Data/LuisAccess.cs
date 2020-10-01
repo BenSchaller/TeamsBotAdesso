@@ -19,7 +19,7 @@ namespace EchoBot.Bots
             this.LuisNavigation = luisNavigation;
         }
 
-        public async Task<IdentifiedIntent> GetIntent(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        public async Task<IdentifiedIntent> GetIntent(ITurnContext turnContext, CancellationToken cancellationToken)
         {
             var recognizerResult = await LuisNavigation.RecognizeAsync(turnContext, cancellationToken);
             var topIntent = recognizerResult.GetTopScoringIntent();

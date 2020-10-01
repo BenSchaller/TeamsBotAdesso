@@ -17,23 +17,27 @@ namespace EchoBot.Bots
         }
 
 
-        public async Task AccessQnAMaker(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        public async Task AccessQnAMaker(ITurnContext turnContext, CancellationToken cancellationToken)
         {
-            //Send it to the QnAMaker
-            var results = await EchoBotQnA.GetAnswersAsync(turnContext);
-
-            //Result from QnAMaker?
-            if (results.Any())
+            if (turnContext != null)
             {
-                var resultFirst = results.First();
-                CreateHeroCard heroCard = new CreateHeroCard();
+                //Send it to the QnAMaker
+                var results = await EchoBotQnA.GetAnswersAsync(turnContext);
 
-                var attachment = MessageFactory.Attachment(heroCard.FillHeroCard(resultFirst.Answer).ToAttachment());
-                await turnContext.SendActivityAsync(attachment, cancellationToken);
-            }
-            else
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("QnA Maker hat keine Antwort gefunden."), cancellationToken);
+
+                //Result from QnAMaker?
+                if (results.Any())
+                {
+                    var resultFirst = results.First();
+                    CreateHeroCard heroCard = new CreateHeroCard();
+
+                    var attachment = MessageFactory.Attachment(heroCard.FillHeroCard(resultFirst.Answer).ToAttachment());
+                    await turnContext.SendActivityAsync(attachment, cancellationToken);
+                }
+                else
+                {
+                    await turnContext.SendActivityAsync(MessageFactory.Text("QnA Maker hat keine Antwort gefunden."), cancellationToken);
+                }
             }
         }
     }

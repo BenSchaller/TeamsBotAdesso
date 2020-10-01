@@ -9,11 +9,20 @@ using System;
 using EchoBot.DatabaseAccess;
 using EchoBot.Data;
 using System.Collections.Generic;
+using Microsoft.Bot.Builder;
+using System.Threading;
 
 namespace EchoBot.Bots
 {
     public class CreateWebinarCard
     {
+        ITurnContext turnContext;
+
+        public CreateWebinarCard(ITurnContext context)
+        {
+            turnContext = context;
+        }
+
         public Attachment GetWebinarCardFromJson()
         {
             Attachment card = new Attachment()
@@ -25,30 +34,54 @@ namespace EchoBot.Bots
             return card;
         }
 
-        private AdaptiveCard BuildAdaptiveCard()
+        private AdaptiveCard BuildAdaptiveCard(/*ITurnContext turnContext, CancellationToken cancellationToken*/)
         {
             var card = AdaptiveCard.FromJson(File.ReadAllText("BusinessLogic\\Cards\\WebinarCard.json")).Card;
-            
+
 
             var webinarTermine = new GetWebinarTermine();
             List<TerminData> terminList = new List<TerminData>();
             terminList = webinarTermine.GetTermineFromSql();
-            var cs = new AdaptiveChoiceSetInput(); 
-            cs.Id = Guid.NewGuid().ToString();
-            cs.Value = "1";
-            
-           // AdaptiveChoiceSetInput choiceSet = JsonConvert.DeserializeObject<AdaptiveChoiceSetInput>(File.ReadAllText("BusinessLogic\\Cards\\ChoiceSet.json"));
-            
+            var choiceSet = new AdaptiveChoiceSetInput();
+            choiceSet.Id = Guid.NewGuid().ToString();
+            choiceSet.Value = "1";
+            choiceSet.Type = "application/vnd.microsoft.card.adaptive";
+            // AdaptiveChoiceSetInput choiceSet = JsonConvert.DeserializeObject<AdaptiveChoiceSetInput>(File.ReadAllText("BusinessLogic\\Cards\\ChoiceSet.json"));
+
 
             foreach (var choice in terminList)
             {
                 AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson(choice.Datum.ToString(), choice.ID.ToString()));
-                
-                cs.Choices.Add(choices);
+
+                choiceSet.Choices.Add(choices);
 
             }
-            card.Body.Add(cs);
+            card.Body.Add(choiceSet);
+            //var reply = turnContext.Activity.CreateReply();
+            //reply.Attachments = new List<Attachment>()
+            //{
+            //    new Attachment()
+            //    {
+            //        ContentType = "application/vnd.microsoft.card.adaptive",
+            //        Content = card
+            //    }
+            //};
+            CreateReply(card);
             return card;
+        }
+
+        public Activity CreateReply(AdaptiveCard card)
+        {
+            var reply = turnContext.Activity.CreateReply();
+            reply.Attachments = new List<Attachment>()
+            {
+                new Attachment()
+                {
+                    ContentType = "application/vnd.microsoft.card.adaptive",
+                    Content = card
+                }
+            };
+            return reply;
         }
 
         private string RenderCardJsonFromDynamicJson(string choiceTitle, string choiceValue)
