@@ -15,9 +15,10 @@ namespace EchoBot.Logic
     public class AssignActivity
     {
         private ITurnContext<IMessageActivity> turnContext;
-        private LuisRecognizer luisRecognizer;
         private CancellationToken cancellationToken;
         private QnAMaker echoBotQnA;
+        private LuisRecognizer luisRecognizer;
+
         public AssignActivity(ITurnContext<IMessageActivity> context, CancellationToken token, LuisRecognizer recognizer, QnAMaker qna)
         {
             turnContext = context;
@@ -26,69 +27,33 @@ namespace EchoBot.Logic
             echoBotQnA = qna;
         }
 
-
         public async Task Assigner()
         {
             var activity = turnContext.Activity;
             UseUserInformation userInformation = new UseUserInformation();
 
-            switch (turnContext.Activity.Type)
+            if (activity.Text != null && activity.Value == null)
             {
-                case ActivityTypes.ConversationUpdate:
-                    var welcomeText = "Herzlich Willkommen!";
-                    IList<ChannelAccount> membersAdded = new List<ChannelAccount>();
-                    foreach (var member in membersAdded)
-                    {
-                        if (member.Id != turnContext.Activity.Recipient.Id)
-                        {
-                            await turnContext.SendActivityAsync(MessageFactory.Text(welcomeText, welcomeText), cancellationToken);
-                        }
-                    }
-                    break;
+                await turnContext.SendActivityAsync("Bitte erst den Buchungsvorgang abschließen oder abbrechen");
+            }
 
-                case ActivityTypes.Message:
-                    await turnContext.SendActivityAsync("Bitte erst den Buchungsvorgang Abschließen");
-                    if (activity.Text != null && activity.Value == null)
-                    {
-                        //Access the Luis class
-                        var luisRouting = new LuisAccess(luisRecognizer);
+            else if (string.IsNullOrEmpty(activity.Text) && activity.Value != null)
+            {
+                await turnContext.SendActivityAsync(MessageFactory.Text("Es wurde ein Knopf gedrückt"), cancellationToken);
+                var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
 
-                        //Use IdentifiedIntent class to check if Question
-
-                        if (await luisRouting.GetIntent(turnContext, cancellationToken) == IdentifiedIntent.None)
-                        {
-                            await QnA();
-                        }
-                        else
-                        {
-                            await Webinar(userInformation);
-                        }
-
-                        break;
-
-                    }
-                    else if (string.IsNullOrEmpty(activity.Text) && activity.Value != null)
-                    {
-                        await turnContext.SendActivityAsync(MessageFactory.Text("Ich bin nun im Buchungszweig"), cancellationToken);
-                        var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-
-                        ConnectUserWithTermin connectUser = new ConnectUserWithTermin();
-                        connectUser.WriteInConnectionTable(member);
-
-                        break;
-                    }
-                    else
-                    {
-                        await turnContext.SendActivityAsync(MessageFactory.Text("Es gab einen Fehler..."), cancellationToken);
-
-                        break;
-                    }
-
-
+                ConnectUserWithTermin connectUser = new ConnectUserWithTermin();
+                connectUser.WriteInConnectionTable(member);
 
             }
 
+            else
+            {
+                await turnContext.SendActivityAsync(MessageFactory.Text("Es gab einen Fehler..."), cancellationToken);
+
+            }
         }
+
         public async Task Webinar(UseUserInformation userInformation)
         {
             var webinarCard = new CreateWebinarCard(turnContext);
@@ -96,10 +61,8 @@ namespace EchoBot.Logic
 
             await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
 
-
             var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
             userInformation.CreateNewUserEntry(member);
-
         }
         public async Task QnA()
         {
@@ -110,3 +73,4 @@ namespace EchoBot.Logic
 
     }
 }
+

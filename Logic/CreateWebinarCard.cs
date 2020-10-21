@@ -34,7 +34,7 @@ namespace EchoBot.Bots
             return card;
         }
 
-        private AdaptiveCard BuildAdaptiveCard(/*ITurnContext turnContext, CancellationToken cancellationToken*/)
+        private AdaptiveCard BuildAdaptiveCard()
         {
             var card = AdaptiveCard.FromJson(File.ReadAllText("BusinessLogic\\Cards\\WebinarCard.json")).Card;
 
@@ -46,27 +46,16 @@ namespace EchoBot.Bots
             choiceSet.Id = Guid.NewGuid().ToString();
             choiceSet.Value = "1";
             choiceSet.Type = "application/vnd.microsoft.card.adaptive";
-            // AdaptiveChoiceSetInput choiceSet = JsonConvert.DeserializeObject<AdaptiveChoiceSetInput>(File.ReadAllText("BusinessLogic\\Cards\\ChoiceSet.json"));
-
+            
 
             foreach (var choice in terminList)
             {
                 AdaptiveChoice choices = JsonConvert.DeserializeObject<AdaptiveChoice>(RenderCardJsonFromDynamicJson(choice.Datum.ToString(), choice.ID.ToString()));
 
                 choiceSet.Choices.Add(choices);
-
             }
-            card.Body.Add(choiceSet);
-            //var reply = turnContext.Activity.CreateReply();
-            //reply.Attachments = new List<Attachment>()
-            //{
-            //    new Attachment()
-            //    {
-            //        ContentType = "application/vnd.microsoft.card.adaptive",
-            //        Content = card
-            //    }
-            //};
             CreateReply(card);
+            card.Body.Add(choiceSet);
             return card;
         }
 

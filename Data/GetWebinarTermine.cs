@@ -28,7 +28,6 @@ namespace EchoBot.Data
         {
             string terminAbfrageString = "Select ID, Datum, StartZeit, EndZeit from dbo.WebinarTermine";
 
-
             SqlCommand command = new SqlCommand(terminAbfrageString, sqlConnection);
             using (SqlDataReader terminReader = command.ExecuteReader())
             {
