@@ -51,6 +51,7 @@ namespace Microsoft.BotBuilderSamples.Bots
                 var assign = new AssignActivity(turnContext, cancellationToken, LuisNavigation, EchoBotQnA);
                 await assign.Assigner();
                 await turnContext.SendActivityAsync("du bist noch in der Webinar Klasse");
+                conversationStateObj.Webinar = false;
             }
 
             else if (conversationStateObj.QnA)

@@ -39,6 +39,7 @@ namespace EchoBot.Logic
 
             else if (string.IsNullOrEmpty(activity.Text) && activity.Value != null)
             {
+                
                 await turnContext.SendActivityAsync(MessageFactory.Text("Es wurde ein Knopf gedrückt"), cancellationToken);
                 var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
 
