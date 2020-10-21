@@ -1,7 +1,6 @@
 {
   "type": "Input.ChoiceSet",
-  "placeholder": "Webinahhhr Termine",
-  "id": "5",
+  "placeholder": "Webinar Termine",
   "value": "1",
   "choices": []
 }

@@ -45,8 +45,7 @@ namespace EchoBot.Bots
             var choiceSet = new AdaptiveChoiceSetInput();
             choiceSet.Id = Guid.NewGuid().ToString();
             choiceSet.Value = "1";
-            choiceSet.Type = "application/vnd.microsoft.card.adaptive";
-            
+            choiceSet.Type = "Input.ChoiceSet";
 
             foreach (var choice in terminList)
             {
@@ -54,8 +53,8 @@ namespace EchoBot.Bots
 
                 choiceSet.Choices.Add(choices);
             }
-            CreateReply(card);
             card.Body.Add(choiceSet);
+
             return card;
         }
 
