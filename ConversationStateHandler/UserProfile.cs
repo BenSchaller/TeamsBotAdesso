@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EchoBot.ConversationState
+namespace EchoBot.ConversationStateHandler
 {
     public class UserProfile
     {

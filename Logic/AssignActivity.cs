@@ -1,4 +1,5 @@
 ﻿using EchoBot.Bots;
+using EchoBot.ConversationStateHandler;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.Bot.Builder.AI.QnA;
@@ -18,16 +19,26 @@ namespace EchoBot.Logic
         private CancellationToken cancellationToken;
         private QnAMaker echoBotQnA;
         private LuisRecognizer luisRecognizer;
+        private ConvState convStateObj;
+        private Microsoft.Bot.Builder.ConversationState conversationState;
+        private IStatePropertyAccessor<ConvState> conversationStateProperty;
 
-        public AssignActivity(ITurnContext<IMessageActivity> context, CancellationToken token, LuisRecognizer recognizer, QnAMaker qna)
+        public AssignActivity(ITurnContext<IMessageActivity> context, CancellationToken token, LuisRecognizer recognizer, QnAMaker qna, ConvState convState)
         {
             turnContext = context;
             luisRecognizer = recognizer;
             cancellationToken = token;
             echoBotQnA = qna;
+            convStateObj = convState;
         }
 
-        public async Task Assigner()
+        public AssignActivity(ITurnContext<IMessageActivity> context, CancellationToken token, LuisRecognizer recognizer, QnAMaker qna, ConvState convState, Microsoft.Bot.Builder.ConversationState conversationState, IStatePropertyAccessor<ConvState> conversationStateProperty) : this(context, token, recognizer, qna, convState)
+        {
+            this.conversationState = conversationState;
+            this.conversationStateProperty = conversationStateProperty;
+        }
+
+        public async Task<bool> Assigner()
         {
             var activity = turnContext.Activity;
             UseUserInformation userInformation = new UseUserInformation();
@@ -35,23 +46,24 @@ namespace EchoBot.Logic
             if (activity.Text != null && activity.Value == null)
             {
                 await turnContext.SendActivityAsync("Bitte erst den Buchungsvorgang abschließen oder abbrechen");
+                return true;
             }
 
             else if (string.IsNullOrEmpty(activity.Text) && activity.Value != null)
             {
-                
                 await turnContext.SendActivityAsync(MessageFactory.Text("Es wurde ein Knopf gedrückt"), cancellationToken);
-                var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+                //hier
+                //var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
 
-                ConnectUserWithTermin connectUser = new ConnectUserWithTermin();
-                connectUser.WriteInConnectionTable(member);
-
+                //ConnectUserWithTermin connectUser = new ConnectUserWithTermin();
+                //connectUser.WriteInConnectionTable(member);
+                return false;
             }
 
             else
             {
                 await turnContext.SendActivityAsync(MessageFactory.Text("Es gab einen Fehler..."), cancellationToken);
-
+                return false;
             }
         }
 

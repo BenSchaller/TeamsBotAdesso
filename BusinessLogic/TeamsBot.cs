@@ -10,7 +10,7 @@ using EchoBot.Logic;
 using Microsoft.Bot.Builder.Teams;
 using Newtonsoft.Json.Linq;
 using AdaptiveCards;
-using EchoBot.ConversationState;
+using EchoBot.ConversationStateHandler;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -20,14 +20,15 @@ namespace Microsoft.BotBuilderSamples.Bots
         private UserState _userState;
         private IStatePropertyAccessor<ConvState> _conversationStateProperty;
 
+
         public TeamsBot(LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint, ConversationState conversationState, UserState userState)
         {
-            //Connects to QnAMakerEnpoint for each turn
             LuisNavigation = new LuisRecognizer(optionsLuis);
             EchoBotQnA = new QnAMaker(endpoint);
             _conversationState = conversationState;
             _userState = userState;
             _conversationStateProperty = _conversationState.CreateProperty<ConvState>(nameof(ConvState));
+
         }
 
 
@@ -38,20 +39,13 @@ namespace Microsoft.BotBuilderSamples.Bots
             var userStateProp = _userState.CreateProperty<UserProfile>(nameof(UserProfile));
             var userStateObj = await userStateProp.GetAsync(turnContext, () => new UserProfile());
 
-            UseUserInformation userInformation = new UseUserInformation();
-            var activity = turnContext.Activity;
-
-            //Access the Luis class
-            var luisRouting = new LuisAccess(LuisNavigation);
-
-            //Use IdentifiedIntent class to check if Question
-            var routing = await luisRouting.GetIntent(turnContext, cancellationToken);
             if (conversationStateObj.Webinar)
             {
-                var assign = new AssignActivity(turnContext, cancellationToken, LuisNavigation, EchoBotQnA);
-                await assign.Assigner();
-                await turnContext.SendActivityAsync("du bist noch in der Webinar Klasse");
-                conversationStateObj.Webinar = false;
+                var assign = new AssignActivity(turnContext, cancellationToken, LuisNavigation, EchoBotQnA, conversationStateObj, _conversationState, _conversationStateProperty);
+                conversationStateObj.Webinar = await assign.Assigner();
+                SaveConvState saveConvState = new SaveConvState(_conversationState, _userState, conversationStateObj);
+                await saveConvState.ConvStateSaver(turnContext, cancellationToken);
+                await turnContext.SendActivityAsync("Du bist noch in der Webinar Klasse");
             }
 
             else if (conversationStateObj.QnA)
@@ -61,10 +55,16 @@ namespace Microsoft.BotBuilderSamples.Bots
             }
             else
             {
+                //Access the Luis class
+                var luisRouting = new LuisAccess(LuisNavigation);
+
+                //Use IdentifiedIntent class to check if Question
+                var routing = await luisRouting.GetIntent(turnContext, cancellationToken);
+
+
                 switch (routing)
                 {
                     case IdentifiedIntent.None:
-                        await _conversationStateProperty.SetAsync(turnContext, conversationStateObj);
 
                         var qnaMaker = new QnAMakerAccess(EchoBotQnA);
 
@@ -73,15 +73,16 @@ namespace Microsoft.BotBuilderSamples.Bots
                         break;
 
                     case IdentifiedIntent.WebinarBuchen:
-
                         conversationStateObj.Webinar = true;
-                        await _conversationStateProperty.SetAsync(turnContext, conversationStateObj);
-                        await _conversationState.SaveChangesAsync(turnContext, false, cancellationToken);
+                        var saveConvState = new SaveConvState(_conversationState, _userState, conversationStateObj);
+                        await saveConvState.ConvStateSaver(turnContext, cancellationToken);
 
                         var webinarCard = new CreateWebinarCard(turnContext);
                         var card = webinarCard.GetWebinarCardFromJson();
 
                         await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
+
+                        var userInformation = new UseUserInformation();
 
                         var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
                         userInformation.CreateNewUserEntry(member);
