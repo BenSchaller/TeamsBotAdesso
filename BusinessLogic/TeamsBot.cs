@@ -19,7 +19,8 @@ namespace Microsoft.BotBuilderSamples.Bots
         private ConversationState _conversationState;
         private UserState _userState;
         private IStatePropertyAccessor<ConvState> _conversationStateProperty;
-
+        private IStatePropertyAccessor<Attachment> _webinarCardProperty;
+        private Attachment _webinarCard;
 
         public TeamsBot(LuisRecognizerOptionsV3 optionsLuis, QnAMakerEndpoint endpoint, ConversationState conversationState, UserState userState)
         {
@@ -31,7 +32,6 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         }
 
-
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             var conversationStateObj = await _conversationStateProperty.GetAsync(turnContext, () => new ConvState());
@@ -41,18 +41,13 @@ namespace Microsoft.BotBuilderSamples.Bots
 
             if (conversationStateObj.Webinar)
             {
-                var assign = new AssignActivity(turnContext, cancellationToken, LuisNavigation, EchoBotQnA, conversationStateObj, _conversationState, _conversationStateProperty);
+                var assign = new AssignActivity(turnContext, cancellationToken, EchoBotQnA);
                 conversationStateObj.Webinar = await assign.Assigner();
+
                 SaveConvState saveConvState = new SaveConvState(_conversationState, _userState, conversationStateObj);
                 await saveConvState.ConvStateSaver(turnContext, cancellationToken);
-                await turnContext.SendActivityAsync("Du bist noch in der Webinar Klasse");
             }
 
-            else if (conversationStateObj.QnA)
-            {
-                await turnContext.SendActivityAsync("du bist noch in der QnA Klasse");
-
-            }
             else
             {
                 //Access the Luis class
@@ -60,7 +55,6 @@ namespace Microsoft.BotBuilderSamples.Bots
 
                 //Use IdentifiedIntent class to check if Question
                 var routing = await luisRouting.GetIntent(turnContext, cancellationToken);
-
 
                 switch (routing)
                 {
@@ -77,10 +71,10 @@ namespace Microsoft.BotBuilderSamples.Bots
                         var saveConvState = new SaveConvState(_conversationState, _userState, conversationStateObj);
                         await saveConvState.ConvStateSaver(turnContext, cancellationToken);
 
-                        var webinarCard = new CreateWebinarCard(turnContext);
-                        var card = webinarCard.GetWebinarCardFromJson();
+                        var card = new CreateWebinarCard(turnContext);
+                        _webinarCard = card.GetWebinarCardFromJson();
 
-                        await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
+                        await turnContext.SendActivityAsync(MessageFactory.Attachment(_webinarCard));
 
                         var userInformation = new UseUserInformation();
 
@@ -109,79 +103,6 @@ namespace Microsoft.BotBuilderSamples.Bots
 
         //Construct connection to Microsoft Cognitive Services
         public LuisRecognizer LuisNavigation { get; private set; }
-
         public QnAMaker EchoBotQnA { get; private set; }
-
-        //public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default)
-        //{
-        //    //Returns the raw Context/Echo Kommentar
-
-        //    UseUserInformation userInformation = new UseUserInformation();
-
-        //var activity = turnContext.Activity;
-        //    switch (turnContext.Activity.Type)
-        //    {
-        //        case ActivityTypes.ConversationUpdate:
-        //            var welcomeText = "Herzlich Willkommen!";
-        //            IList<ChannelAccount> membersAdded = new List<ChannelAccount>();
-        //            foreach (var member in membersAdded)
-        //            {
-        //                if (member.Id != turnContext.Activity.Recipient.Id)
-        //                {
-        //                    await turnContext.SendActivityAsync(MessageFactory.Text(welcomeText, welcomeText), cancellationToken);
-        //                }
-        //            }
-        //            break;
-
-        //        case ActivityTypes.Message:
-
-        //            if (activity.Text != null && activity.Value == null)
-        //            {
-        //                //Access the Luis class
-        //                var luisRouting = new LuisAccess(LuisNavigation);
-
-        //                //Use IdentifiedIntent class to check if Question
-
-        //                if (await luisRouting.GetIntent(turnContext, cancellationToken) == IdentifiedIntent.None)
-        //                {
-        //                    var qnaMaker = new QnAMakerAccess(EchoBotQnA);
-        //                    await qnaMaker.AccessQnAMaker(turnContext, cancellationToken);
-        //                }
-        //                else
-        //                {
-        //                    var webinarCard = new CreateWebinarCard(turnContext);
-        //                    var card = webinarCard.GetWebinarCardFromJson();
-
-        //                    await turnContext.SendActivityAsync(MessageFactory.Attachment(card));
-
-
-        //                    var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-        //                    userInformation.CreateNewUserEntry(member);
-        //                }
-
-        //                break;
-
-        //            }
-        //            else if (string.IsNullOrEmpty(activity.Text) && activity.Value != null)
-        //            {
-        //                await turnContext.SendActivityAsync(MessageFactory.Text("Ich bin nun im Buchungszweig"), cancellationToken);
-        //                var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-
-        //                ConnectUserWithTermin connectUser = new ConnectUserWithTermin();
-        //                connectUser.WriteInConnectionTable(member);
-
-        //                break;
-        //            }
-        //            else
-        //            {
-        //                await turnContext.SendActivityAsync(MessageFactory.Text("Es gab einen Fehler..."), cancellationToken);
-
-        //                break;
-        //            }
-
-        //    };
-        //}
-
-
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.Bot.Builder.AI.Luis;
 using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Extensions.Hosting;
 using System.Data.SqlClient;
+using Microsoft.Bot.Schema;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -68,6 +69,7 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<IStorage, MemoryStorage>();
             services.AddSingleton<ConversationState>();
             services.AddSingleton<UserState>();
+            services.AddSingleton<Attachment>();
 
         }
 

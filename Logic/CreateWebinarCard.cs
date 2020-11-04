@@ -11,12 +11,16 @@ using EchoBot.Data;
 using System.Collections.Generic;
 using Microsoft.Bot.Builder;
 using System.Threading;
+using EchoBot.ConversationStateHandler;
+using System.Linq;
 
 namespace EchoBot.Bots
 {
     public class CreateWebinarCard
     {
+        //private ConversationState _conversationState;
         ITurnContext turnContext;
+        private AdaptiveCard card;
 
         public CreateWebinarCard(ITurnContext context)
         {
@@ -36,8 +40,7 @@ namespace EchoBot.Bots
 
         private AdaptiveCard BuildAdaptiveCard()
         {
-            var card = AdaptiveCard.FromJson(File.ReadAllText("BusinessLogic\\Cards\\WebinarCard.json")).Card;
-
+            card = AdaptiveCard.FromJson(File.ReadAllText("BusinessLogic\\Cards\\WebinarCard.json")).Card;
 
             var webinarTermine = new GetWebinarTermine();
             List<TerminData> terminList = new List<TerminData>();

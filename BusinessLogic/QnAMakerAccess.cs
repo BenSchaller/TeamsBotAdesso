@@ -16,14 +16,12 @@ namespace EchoBot.Bots
             EchoBotQnA = echoBotQnA;
         }
 
-
         public async Task AccessQnAMaker(ITurnContext turnContext, CancellationToken cancellationToken)
         {
             if (turnContext != null)
             {
                 //Send it to the QnAMaker
                 var results = await EchoBotQnA.GetAnswersAsync(turnContext);
-
 
                 //Result from QnAMaker?
                 if (results.Any())
