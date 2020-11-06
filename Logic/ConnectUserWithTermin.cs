@@ -15,7 +15,7 @@ namespace EchoBot.Logic
         {
             string userId = user.Id;
             var dbConnection = new DatabaseConnection();
-            dbConnection.InsertIntoConnectionTable(userId);
+            //dbConnection.InsertIntoConnectionTable(/*userId*/);
         }
 
     }

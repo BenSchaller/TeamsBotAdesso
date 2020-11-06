@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using EchoBot.DatabaseAccess;
 
 namespace EchoBot.Logic
 {
@@ -45,29 +46,20 @@ namespace EchoBot.Logic
             else if (string.IsNullOrEmpty(activity.Text) && activity.Value != null)
             {
                 string value = turnContext.Activity.Value.ToString();
-                await turnContext.SendActivityAsync(value);
-                JObject jObj = (JObject)JsonConvert.DeserializeObject(value);
-                int count = jObj.Count;
 
                 string[] items = new string[10];
                 items = value.Split('"');
-                string id = items[7];
+                string terminId = items[7];
+                int termId = Int32.Parse(terminId);
+                var dbConnection = new DatabaseConnection();
 
-                //var card1 = turnContext.Activity.Attachments.First();
-                //card = AdaptiveCard.FromJson(File.ReadAllText(card1.ToString())).Card;
+                dbConnection.InsertIntoConnectionTable(termId);
 
                 Attachment attachment = new Attachment();
 
-                //var termin = card(x => x.ChoiceSet.IsSelected);
-
                 await turnContext.SendActivityAsync(MessageFactory.Text("Es wurde ein Knopf gedrückt"), cancellationToken);
-                await turnContext.SendActivityAsync(MessageFactory.Text(id), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
 
-                //hier
-                //var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-
-                //ConnectUserWithTermin connectUser = new ConnectUserWithTermin();
-                //connectUser.WriteInConnectionTable(member);
                 return false;
             }
 
@@ -96,4 +88,3 @@ namespace EchoBot.Logic
 
     }
 }
-

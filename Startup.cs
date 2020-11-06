@@ -13,6 +13,9 @@ using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Extensions.Hosting;
 using System.Data.SqlClient;
 using Microsoft.Bot.Schema;
+using EchoBot.Data;
+using Microsoft.EntityFrameworkCore;
+using EntityFramwork.Data;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -71,6 +74,10 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<UserState>();
             services.AddSingleton<Attachment>();
 
+            services.AddDbContext<UserData>(options =>
+            { 
+             options.UseSqlServer(Configuration.GetConnectionString("Default")); 
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

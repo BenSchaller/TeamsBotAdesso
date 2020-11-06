@@ -32,17 +32,18 @@ namespace EchoBot.DatabaseAccess
             sqlConnection.Close();
         }
 
-        public void InsertIntoConnectionTable(string userMail)
+        public void InsertIntoConnectionTable(int terminId/*string userMail*/)
         {
+            string userMail = "Benedict-Vincent.Schaller@adesso.de";
             sqlConnection.Open();
             string selectId = "Select TOP(1) Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = '" + userMail + "'";
             SqlCommand sql = new SqlCommand(selectId, sqlConnection);
-            var userId = sql.ExecuteReader();
-            string commandString = "INSERT INTO Termine2Teilnehmer VALUES('" + 1 + "', '" + userId + "')";
+            string userId = sql.ExecuteReader().ToString();
+            int employeeId = Int32.Parse(userId);
+            string commandString = "INSERT INTO Termine2Teilnehmer VALUES('" + terminId + "', '" + employeeId + "')";
             SqlCommand command = new SqlCommand(commandString, sqlConnection);
             command.ExecuteNonQuery();
             sqlConnection.Close();
-
         }
     }
 }
