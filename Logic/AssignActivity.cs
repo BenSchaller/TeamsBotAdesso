@@ -53,7 +53,8 @@ namespace EchoBot.Logic
                 int termId = Int32.Parse(terminId);
                 var dbConnection = new DatabaseConnection();
 
-                string mailAdress = turnContext.Activity.From.Id;
+                var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+                string mailAdress = member.Email;
 
                 dbConnection.InsertIntoConnectionTable(termId, mailAdress);
 
