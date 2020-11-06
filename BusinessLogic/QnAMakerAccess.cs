@@ -14,7 +14,6 @@ namespace EchoBot.Bots
         public QnAMakerAccess(QnAMaker echoBotQnA)
         {
             EchoBotQnA = echoBotQnA;
-
         }
 
         public async Task AccessQnAMaker(ITurnContext turnContext, CancellationToken cancellationToken)
