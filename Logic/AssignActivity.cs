@@ -59,7 +59,7 @@ namespace EchoBot.Logic
 
                 Attachment attachment = new Attachment();
 
-                await turnContext.SendActivityAsync(MessageFactory.Text("Es wurde ein Knopf gedrückt"), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text("Das Webinar wurde gebucht"), cancellationToken);
                 await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
 
                 return false;
