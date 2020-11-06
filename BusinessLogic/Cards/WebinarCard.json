@@ -27,7 +27,6 @@
           "title": "Buchen",
           "data": {
             "action": "book",
-            "method": "POST"
           }
         },
         {
@@ -35,7 +34,6 @@
           "type": "Action.Submit",
           "data": {
             "action": "break",
-            "method": "POST"
           }
         }
       ]
