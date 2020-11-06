@@ -47,22 +47,28 @@ namespace EchoBot.Logic
             {
                 string value = turnContext.Activity.Value.ToString();
 
-                string[] items = new string[10];
-                items = value.Split('"');
-                string terminId = items[7];
-                int termId = Int32.Parse(terminId);
-                var dbConnection = new DatabaseConnection();
+                if (value.Contains("book"))
+                {
+                    string[] items = new string[10];
+                    items = value.Split('"');
+                    string terminId = items[7];
+                    int termId = Int32.Parse(terminId);
+                    var dbConnection = new DatabaseConnection();
 
-                var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-                string mailAdress = member.Email;
+                    var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
+                    string mailAdress = member.Email;
 
-                dbConnection.InsertIntoConnectionTable(termId, mailAdress);
+                    dbConnection.InsertIntoConnectionTable(termId, mailAdress);
 
-                Attachment attachment = new Attachment();
+                    Attachment attachment = new Attachment();
 
-                await turnContext.SendActivityAsync(MessageFactory.Text("Das Webinar wurde gebucht"), cancellationToken);
-                await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
-
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Das Webinar wurde gebucht"), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
+                }
+                else if(value.Contains("break"))
+                { 
+                    await turnContext.SendActivityAsync(MessageFactory.Text("Die Buchung wurde abgebrochen"), cancellationToken); 
+                }
                 return false;
             }
 
