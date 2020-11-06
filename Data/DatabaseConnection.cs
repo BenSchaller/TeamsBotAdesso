@@ -36,11 +36,13 @@ namespace EchoBot.DatabaseAccess
         {
             string userMail = "Benedict-Vincent.Schaller@adesso.de";
             sqlConnection.Open();
-            string selectId = "Select TOP(1) Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = '" + userMail + "'";
-            SqlCommand sql = new SqlCommand(selectId, sqlConnection);
-            string userId = sql.ExecuteReader().ToString();
-            int employeeId = Int32.Parse(userId);
-            string commandString = "INSERT INTO Termine2Teilnehmer VALUES('" + terminId + "', '" + employeeId + "')";
+            string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
+            SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
+
+            selectIdSql.Parameters.AddWithValue("@userMail", userMail);
+
+            int userId = (int)selectIdSql.ExecuteScalar();
+            string commandString = "INSERT INTO Termine2Teilnehmer VALUES('" + terminId + "', '" + userId + "')";
             SqlCommand command = new SqlCommand(commandString, sqlConnection);
             command.ExecuteNonQuery();
             sqlConnection.Close();
