@@ -11,6 +11,7 @@ using Microsoft.Bot.Builder.Teams;
 using Newtonsoft.Json.Linq;
 using AdaptiveCards;
 using EchoBot.ConversationStateHandler;
+using EchoBot.DatabaseAccess;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -78,9 +79,13 @@ namespace Microsoft.BotBuilderSamples.Bots
 
                         var userInformation = new UseUserInformation();
 
+                        var databaseCommands = new DatabaseConnection();
                         var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-                        userInformation.CreateNewUserEntry(member);
 
+                        if (!databaseCommands.CheckUserEntry(member.Id))
+                        {
+                            userInformation.CreateNewUserEntry(member);
+                        }
                         break;
                 }
             }

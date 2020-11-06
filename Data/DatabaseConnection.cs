@@ -32,13 +32,13 @@ namespace EchoBot.DatabaseAccess
             sqlConnection.Close();
         }
 
-        public void InsertIntoConnectionTable(int terminId/*string userMail*/)
+        public void InsertIntoConnectionTable(int terminId, string userMail)
         {
-            string userMail = "Benedict-Vincent.Schaller@adesso.de";
+
+            //string userMail = "Benedict-Vincent.Schaller@adesso.de";
             sqlConnection.Open();
             string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
             SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
-
             selectIdSql.Parameters.AddWithValue("@userMail", userMail);
 
             int userId = (int)selectIdSql.ExecuteScalar();
@@ -47,5 +47,19 @@ namespace EchoBot.DatabaseAccess
             command.ExecuteNonQuery();
             sqlConnection.Close();
         }
+
+        public bool CheckUserEntry(string userMail)
+        {
+            sqlConnection.Open();
+            string selectId = "Select * from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
+            SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
+            selectIdSql.Parameters.AddWithValue("@userMail", userMail);
+
+            var result = selectIdSql.ExecuteReader();
+            sqlConnection.Close();
+
+            return result.HasRows;
+        }
+
     }
 }

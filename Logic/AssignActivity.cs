@@ -53,7 +53,9 @@ namespace EchoBot.Logic
                 int termId = Int32.Parse(terminId);
                 var dbConnection = new DatabaseConnection();
 
-                dbConnection.InsertIntoConnectionTable(termId);
+                string mailAdress = turnContext.Activity.From.Id;
+
+                dbConnection.InsertIntoConnectionTable(termId, mailAdress);
 
                 Attachment attachment = new Attachment();
 
