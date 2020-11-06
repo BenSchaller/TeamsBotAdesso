@@ -76,17 +76,15 @@ namespace Microsoft.BotBuilderSamples.Bots
                         _webinarCard = card.GetWebinarCardFromJson();
 
                         await turnContext.SendActivityAsync(MessageFactory.Attachment(_webinarCard));
-
                         var userInformation = new UseUserInformation();
 
                         var databaseCommands = new DatabaseConnection();
-
                         var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
 
-                        if (!databaseCommands.CheckUserEntry(member.Id))
-                        {
+                        //if (!databaseCommands.CheckUserEntry(member.Id))
+                        //{
                             userInformation.CreateNewUserEntry(member);
-                        }
+                        //}
                         break;
                 }
             }
