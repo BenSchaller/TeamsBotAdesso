@@ -41,7 +41,7 @@ namespace EchoBot.DatabaseAccess
             SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
             selectIdSql.Parameters.AddWithValue("@userMail", userMail);
 
-            var userId = selectIdSql.ExecuteScalar();
+            string userId = selectIdSql.ExecuteScalar().ToString();
             string commandString = "INSERT INTO Termine2Teilnehmer VALUES('" + terminId + "', '" + userId + "')";
             SqlCommand command = new SqlCommand(commandString, sqlConnection);
             command.ExecuteNonQuery();
