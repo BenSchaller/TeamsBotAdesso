@@ -22,6 +22,7 @@ namespace EchoBot.Bots
         ITurnContext turnContext;
         private AdaptiveCard card;
 
+
         public CreateWebinarCard(ITurnContext context)
         {
             turnContext = context;
@@ -46,6 +47,7 @@ namespace EchoBot.Bots
             List<TerminData> terminList = new List<TerminData>();
             terminList = webinarTermine.GetTermineFromSql();
             var choiceSet = new AdaptiveChoiceSetInput();
+
             choiceSet.Id = Guid.NewGuid().ToString();
             choiceSet.Value = "1";
             choiceSet.Type = "Input.ChoiceSet";
@@ -57,6 +59,7 @@ namespace EchoBot.Bots
                 choiceSet.Choices.Add(choices);
             }
             card.Body.Add(choiceSet);
+            
 
             return card;
         }

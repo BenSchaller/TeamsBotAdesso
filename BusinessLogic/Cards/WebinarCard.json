@@ -26,14 +26,16 @@
           "type": "Action.Submit",
           "title": "Buchen",
           "data": {
-            "action": "book"
+            "action": "book",
+            "method": "POST"
           }
         },
         {
           "title": "Abbrechen",
           "type": "Action.Submit",
           "data": {
-            "action": "break"
+            "action": "break",
+            "method": "POST"
           }
         }
       ]
