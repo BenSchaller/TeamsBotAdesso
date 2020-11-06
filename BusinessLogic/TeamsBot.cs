@@ -80,6 +80,7 @@ namespace Microsoft.BotBuilderSamples.Bots
                         var userInformation = new UseUserInformation();
 
                         var databaseCommands = new DatabaseConnection();
+
                         var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
 
                         if (!databaseCommands.CheckUserEntry(member.Id))
