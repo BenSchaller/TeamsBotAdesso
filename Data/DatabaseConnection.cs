@@ -35,7 +35,7 @@ namespace EchoBot.DatabaseAccess
         public void InsertIntoConnectionTable(int terminId, string userMail)
         {
 
-            userMail = "Benedict-Vincent.Schaller@adesso.de";
+            //userMail = "Benedict-Vincent.Schaller@adesso.de";
             sqlConnection.Open();
             string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
             SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
@@ -51,7 +51,7 @@ namespace EchoBot.DatabaseAccess
         public bool CheckUserEntry(string userMail)
         {
             sqlConnection.Open();
-            userMail = "Benedict-Vincent.Schaller@adesso.de";
+            //userMail = "Benedict-Vincent.Schaller@adesso.de";
             string selectId = "Select * from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
             SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
             selectIdSql.Parameters.AddWithValue("@userMail", userMail);
