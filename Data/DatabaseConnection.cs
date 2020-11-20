@@ -49,7 +49,7 @@ namespace EchoBot.DatabaseAccess
         {
             sqlConnection.Open();
 
-            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = '@terminId', TeilnehmerId = '@userId'";
+            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = @terminId, TeilnehmerId = @userId";
             SqlCommand checkIfUserIsBooked = new SqlCommand(checkUserTerminConnection, sqlConnection);
             checkIfUserIsBooked.Parameters.AddWithValue("@terminId", terminId);
             checkIfUserIsBooked.Parameters.AddWithValue("@userId", userId);
