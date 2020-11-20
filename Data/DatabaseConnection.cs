@@ -35,7 +35,7 @@ namespace EchoBot.DatabaseAccess
         public string GetUserIdByMail(string userMail)
         {
             sqlConnection.Open();
-            string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
+            string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = '@userMail'";
             SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
             selectIdSql.Parameters.AddWithValue("@userMail", userMail);
 
@@ -49,8 +49,10 @@ namespace EchoBot.DatabaseAccess
         {
             sqlConnection.Open();
 
-            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = '" + terminId + "', TeilnehmerId = '" + userId + "'";
+            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = '@terminId', TeilnehmerId = '@userId'";
             SqlCommand checkIfUserIsBooked = new SqlCommand(checkUserTerminConnection, sqlConnection);
+            checkIfUserIsBooked.Parameters.AddWithValue("@terminId", terminId);
+            checkIfUserIsBooked.Parameters.AddWithValue("@userId", userId);
             var result = checkIfUserIsBooked.ExecuteReader();
 
             sqlConnection.Close();
@@ -70,7 +72,7 @@ namespace EchoBot.DatabaseAccess
         public bool CheckUserEntry(string userMail)
         {
             sqlConnection.Open();
-            //userMail = "Benedict-Vincent.Schaller@adesso.de";
+            userMail = "Benedict-Vincent.Schaller@adesso.de";
             string selectId = "Select * from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
             SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
             selectIdSql.Parameters.AddWithValue("@userMail", userMail);
