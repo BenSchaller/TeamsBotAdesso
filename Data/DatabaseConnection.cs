@@ -72,7 +72,7 @@ namespace EchoBot.DatabaseAccess
         public bool CheckUserEntry(string userMail)
         {
             sqlConnection.Open();
-            userMail = "Benedict-Vincent.Schaller@adesso.de";
+            //userMail = "Benedict-Vincent.Schaller@adesso.de";
             string selectId = "Select * from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
             SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
             selectIdSql.Parameters.AddWithValue("@userMail", userMail);
