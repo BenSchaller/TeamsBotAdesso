@@ -18,7 +18,7 @@ namespace EchoBot.DatabaseAccess
         {
             string sqlConnectionString = "Server=tcp:webinarazuresqldb.database.windows.net,1433;Initial Catalog=WebinarDB;Persist Security Info=False;" +
             "User ID=benschaller;Password=Admin1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            
+
             sqlConnection = new SqlConnection(sqlConnectionString);
         }
         public SqlConnection OpenSqlConnection()
@@ -62,10 +62,13 @@ namespace EchoBot.DatabaseAccess
 
         public void InsertIntoConnectionTable(int terminId, string userId)
         {
-            sqlConnection.Open();            
-                string commandString = "INSERT INTO Termine2Teilnehmer VALUES('" + terminId + "', '" + userId + "')";
-                SqlCommand command = new SqlCommand(commandString, sqlConnection);
-                command.ExecuteNonQuery();
+            sqlConnection.Open();
+            string commandString = "INSERT INTO Termine2Teilnehmer VALUES(@terminId, @userId)";
+            SqlCommand command = new SqlCommand(commandString, sqlConnection);
+            command.Parameters.AddWithValue("@terminId", terminId);
+            command.Parameters.AddWithValue("@userId", userId);
+
+            command.ExecuteNonQuery();
             sqlConnection.Close();
         }
 
