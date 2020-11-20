@@ -57,13 +57,21 @@ namespace EchoBot.Logic
 
                     var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
                     string mailAdress = member.Email;
+                    string userId = dbConnection.GetUserIdByMail(mailAdress);
 
-                    dbConnection.InsertIntoConnectionTable(termId, mailAdress);
+                    if (dbConnection.DidUserBookWebinar(termId, userId))
+                    {
+                        await turnContext.SendActivityAsync("Das Webinar wurde von Ihnen bereits gebucht.");
+                    }
+                    else
+                    {
+                        dbConnection.InsertIntoConnectionTable(termId, userId);
 
-                    Attachment attachment = new Attachment();
+                        Attachment attachment = new Attachment();
 
-                    await turnContext.SendActivityAsync(MessageFactory.Text("Das Webinar wurde gebucht"), cancellationToken);
-                    await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
+                        await turnContext.SendActivityAsync(MessageFactory.Text("Das Webinar wurde gebucht"), cancellationToken);
+                        await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
+                    }
                 }
                 else if(value.Contains("break"))
                 { 
