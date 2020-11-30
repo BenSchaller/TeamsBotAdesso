@@ -67,8 +67,6 @@ namespace EchoBot.Logic
                     {
                         dbConnection.InsertIntoConnectionTable(termId, userId);
 
-                        Attachment attachment = new Attachment();
-
                         await turnContext.SendActivityAsync(MessageFactory.Text("Das Webinar wurde gebucht"), cancellationToken);
                         await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
                     }

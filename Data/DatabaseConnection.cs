@@ -36,10 +36,10 @@ namespace EchoBot.DatabaseAccess
         {
             sqlConnection.Open();
             string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = '@userMail'";
-            SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
-            selectIdSql.Parameters.AddWithValue("@userMail", userMail);
+            SqlCommand selectUserIdCommand = new SqlCommand(selectId, sqlConnection);
+            selectUserIdCommand.Parameters.AddWithValue("@userMail", userMail);
 
-            string userId = selectIdSql.ExecuteScalar().ToString();
+            string userId = selectUserIdCommand.ExecuteScalar().ToString();
 
             sqlConnection.Close();
             return userId;
@@ -50,10 +50,10 @@ namespace EchoBot.DatabaseAccess
             sqlConnection.Open();
 
             string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = @terminId, TeilnehmerId = @userId";
-            SqlCommand checkIfUserIsBooked = new SqlCommand(checkUserTerminConnection, sqlConnection);
-            checkIfUserIsBooked.Parameters.AddWithValue("@terminId", terminId);
-            checkIfUserIsBooked.Parameters.AddWithValue("@userId", userId);
-            var result = checkIfUserIsBooked.ExecuteReader();
+            SqlCommand checkIfUserIsBookedCommand = new SqlCommand(checkUserTerminConnection, sqlConnection);
+            checkIfUserIsBookedCommand.Parameters.AddWithValue("@terminId", terminId);
+            checkIfUserIsBookedCommand.Parameters.AddWithValue("@userId", userId);
+            var result = checkIfUserIsBookedCommand.ExecuteReader();
 
             sqlConnection.Close();
             return result.HasRows;
@@ -64,23 +64,23 @@ namespace EchoBot.DatabaseAccess
         {
             sqlConnection.Open();
             string commandString = "INSERT INTO Termine2Teilnehmer VALUES(@terminId, @userId)";
-            SqlCommand command = new SqlCommand(commandString, sqlConnection);
-            command.Parameters.AddWithValue("@terminId", terminId);
-            command.Parameters.AddWithValue("@userId", userId);
+            SqlCommand insertInConnectionTableCommand = new SqlCommand(commandString, sqlConnection);
+            insertInConnectionTableCommand.Parameters.AddWithValue("@terminId", terminId);
+            insertInConnectionTableCommand.Parameters.AddWithValue("@userId", userId);
 
-            command.ExecuteNonQuery();
+            insertInConnectionTableCommand.ExecuteNonQuery();
             sqlConnection.Close();
         }
 
-        public bool CheckUserEntry(string userMail)
+        public bool IsUserInDatabase(string userMail)
         {
             sqlConnection.Open();
             //userMail = "Benedict-Vincent.Schaller@adesso.de";
             string selectId = "Select * from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = '@userMail'";
-            SqlCommand selectIdSql = new SqlCommand(selectId, sqlConnection);
-            selectIdSql.Parameters.AddWithValue("@userMail", userMail);
+            SqlCommand selectUserIdCommand = new SqlCommand(selectId, sqlConnection);
+            selectUserIdCommand.Parameters.AddWithValue("@userMail", userMail);
 
-            var result = selectIdSql.ExecuteReader();
+            var result = selectUserIdCommand.ExecuteReader();
             bool hasRows = result.HasRows;
             sqlConnection.Close();
 
