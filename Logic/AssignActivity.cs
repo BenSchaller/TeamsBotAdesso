@@ -67,7 +67,7 @@ namespace EchoBot.Logic
                         dbConnection.InsertIntoConnectionTable(termId, userId);
 
                         await turnContext.SendActivityAsync(MessageFactory.Text("Das Webinar wurde gebucht"), cancellationToken);
-                        await turnContext.SendActivityAsync(MessageFactory.Text(terminId), cancellationToken);
+                        
                     }
                 }
                 else if(value.Contains("break"))

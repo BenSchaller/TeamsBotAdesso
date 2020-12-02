@@ -79,15 +79,9 @@ namespace Microsoft.BotBuilderSamples.Bots
 
                         var databaseCommands = new DatabaseConnection();
                         var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
-                        await turnContext.SendActivityAsync("IsUserInDatabase Start");
                         if (!databaseCommands.IsUserInDatabase(member.Email))
                         {
-                            await turnContext.SendActivityAsync("IsUserInDatabase End");
-                            await turnContext.SendActivityAsync("CreateNewUserEntry Start");
-
                             userInformation.CreateNewUserEntry(member);
-                            await turnContext.SendActivityAsync("CreateNewUserEntry End");
-
                         }
                         break;
                 }
