@@ -21,21 +21,11 @@ namespace EchoBot.DatabaseAccess
 
             sqlConnection = new SqlConnection(sqlConnectionString);
         }
-        public SqlConnection OpenSqlConnection()
-        {
-            sqlConnection.Open();
-            return sqlConnection;
-        }
-
-        public void CloseSqlConnection()
-        {
-            sqlConnection.Close();
-        }
 
         public string GetUserIdByMail(string userMail)
         {
             sqlConnection.Open();
-            
+
             string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
 
             SqlCommand selectUserIdCommand = new SqlCommand(selectId, sqlConnection);
@@ -53,7 +43,7 @@ namespace EchoBot.DatabaseAccess
             sqlConnection.Open();
 
             string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = @terminId AND TeilnehmerId = @userId";
-            
+
             SqlCommand checkIfUserIsBookedCommand = new SqlCommand(checkUserTerminConnection, sqlConnection);
             checkIfUserIsBookedCommand.Parameters.AddWithValue("@terminId", terminId);
             checkIfUserIsBookedCommand.Parameters.AddWithValue("@userId", userId);
@@ -92,5 +82,44 @@ namespace EchoBot.DatabaseAccess
             return hasRows;
         }
 
+        public List<TerminData> GetWebinarTermine()
+        {
+            sqlConnection.Open();
+            string terminAbfrageString = "Select ID, Datum, StartZeit, EndZeit from dbo.WebinarTermine";
+
+            SqlCommand command = new SqlCommand(terminAbfrageString, sqlConnection);
+            using (SqlDataReader terminReader = command.ExecuteReader())
+            {
+                StringBuilder builder = new StringBuilder();
+                var terminList = new List<TerminData>();
+                while (terminReader.Read())
+                {
+                    terminList.Add(new TerminData { ID = terminReader.GetInt32(0), Datum = terminReader.GetDateTime(1), Startzeit = terminReader.GetTimeSpan(2), Endzeit = terminReader.GetTimeSpan(3) });
+                }
+                terminReader.Close();
+                sqlConnection.Close();
+                return terminList;
+            }
+        }
+        public void InsertTeilnehmerInDb(string userMail, string userName)
+        {
+            sqlConnection.Open();
+
+            string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR(60), Name) = @userName";
+            SqlCommand selectUserByMailCmd = new SqlCommand(selectString, sqlConnection);
+            selectUserByMailCmd.Parameters.AddWithValue("@userName", userName);
+            var result = selectUserByMailCmd.ExecuteReader();
+
+            if (result.HasRows == false)
+            {
+                string insertString = "Insert Into Webinarteilnehmer VALUES(@userName, @userMail)";
+                SqlCommand insertUserCmd = new SqlCommand(insertString, sqlConnection);
+                insertUserCmd.Parameters.AddWithValue("@userName", userName);
+                insertUserCmd.Parameters.AddWithValue("@userMail", userMail);
+                insertUserCmd.ExecuteNonQuery();
+            }
+
+            sqlConnection.Close();
+        }
     }
 }

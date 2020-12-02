@@ -16,29 +16,9 @@ namespace EchoBot.Logic
             string userMail = member.Email;
             string userName = member.Name;
 
-            UpdateSqlDb(userMail, userName);
-        }
+            DatabaseConnection databaseConnection = new DatabaseConnection();
 
-        public void UpdateSqlDb(string userMail, string userName)
-        {
-            var sqlConnection = new DatabaseConnection();
-            var connection = sqlConnection.OpenSqlConnection();
-
-            string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR(60), Name) = @userName";
-            SqlCommand selectUserByMailCmd = new SqlCommand(selectString, connection);
-            selectUserByMailCmd.Parameters.AddWithValue("@userName", userName);
-            var result = selectUserByMailCmd.ExecuteReader();
-
-            if (result.HasRows == false)
-            {
-                string insertString = "Insert Into Webinarteilnehmer VALUES(@userName, @userMail)";
-                SqlCommand insertUserCmd = new SqlCommand(insertString, connection);
-                insertUserCmd.Parameters.AddWithValue("@userName", userName);
-                insertUserCmd.Parameters.AddWithValue("@userMail", userMail);
-                insertUserCmd.ExecuteNonQuery();
-            }
-
-            sqlConnection.CloseSqlConnection();
-        }
+            databaseConnection.InsertTeilnehmerInDb(userMail, userName);
+        }        
     }
 }
