@@ -47,9 +47,10 @@ namespace EchoBot.DatabaseAccess
 
         public bool DidUserBookWebinar(int terminId, string userId)
         {
+
             sqlConnection.Open();
 
-            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = @terminId, TeilnehmerId = @userId";
+            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = '@terminId', TeilnehmerId = '@userId'";
             SqlCommand checkIfUserIsBookedCommand = new SqlCommand(checkUserTerminConnection, sqlConnection);
             checkIfUserIsBookedCommand.Parameters.AddWithValue("@terminId", terminId);
             checkIfUserIsBookedCommand.Parameters.AddWithValue("@userId", userId);
@@ -63,7 +64,7 @@ namespace EchoBot.DatabaseAccess
         public void InsertIntoConnectionTable(int terminId, string userId)
         {
             sqlConnection.Open();
-            string commandString = "INSERT INTO Termine2Teilnehmer VALUES(@terminId, @userId)";
+            string commandString = "INSERT INTO Termine2Teilnehmer VALUES('@terminId', '@userId')";
             SqlCommand insertInConnectionTableCommand = new SqlCommand(commandString, sqlConnection);
             insertInConnectionTableCommand.Parameters.AddWithValue("@terminId", terminId);
             insertInConnectionTableCommand.Parameters.AddWithValue("@userId", userId);
