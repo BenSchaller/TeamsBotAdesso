@@ -52,7 +52,7 @@ namespace EchoBot.DatabaseAccess
 
             sqlConnection.Open();
 
-            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = '@terminId', TeilnehmerId = '@userId'";
+            string checkUserTerminConnection = "SELECT * FROM Termine2Teilnehmer where TerminId = @terminId, TeilnehmerId = @userId";
             
             SqlCommand checkIfUserIsBookedCommand = new SqlCommand(checkUserTerminConnection, sqlConnection);
             checkIfUserIsBookedCommand.Parameters.AddWithValue("@terminId", terminId);
@@ -67,7 +67,7 @@ namespace EchoBot.DatabaseAccess
         public void InsertIntoConnectionTable(int terminId, string userId)
         {
             sqlConnection.Open();
-            string commandString = "INSERT INTO Termine2Teilnehmer VALUES('@terminId', '@userId')";
+            string commandString = "INSERT INTO Termine2Teilnehmer VALUES(@terminId, @userId)";
             SqlCommand insertInConnectionTableCommand = new SqlCommand(commandString, sqlConnection);
             insertInConnectionTableCommand.Parameters.AddWithValue("@terminId", terminId);
             insertInConnectionTableCommand.Parameters.AddWithValue("@userId", userId);
@@ -80,7 +80,7 @@ namespace EchoBot.DatabaseAccess
         {
             sqlConnection.Open();
             //userMail = "Benedict-Vincent.Schaller@adesso.de";
-            string selectId = "Select * from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = '@userMail'";
+            string selectId = "Select * from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
             SqlCommand selectUserIdCommand = new SqlCommand(selectId, sqlConnection);
             selectUserIdCommand.Parameters.AddWithValue("@userMail", userMail);
 
