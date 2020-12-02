@@ -36,7 +36,7 @@ namespace EchoBot.DatabaseAccess
         {
             sqlConnection.Open();
             
-            string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = '@userMail'";
+            string selectId = "Select Id from WebinarTeilnehmer where Convert(varchar(60), MailAdresse) = @userMail";
 
             SqlCommand selectUserIdCommand = new SqlCommand(selectId, sqlConnection);
             selectUserIdCommand.Parameters.AddWithValue("@userMail", userMail);
