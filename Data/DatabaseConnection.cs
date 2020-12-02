@@ -108,8 +108,10 @@ namespace EchoBot.DatabaseAccess
             string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR(60), MailAdresse) = @userMail";
             SqlCommand selectUserByMailCmd = new SqlCommand(selectString, sqlConnection);
             selectUserByMailCmd.Parameters.AddWithValue("@userMail", userMail);
-            var userIsInDb = selectUserByMailCmd.ExecuteReader().HasRows;
-            
+            bool userIsInDb = selectUserByMailCmd.ExecuteReader().HasRows;
+            sqlConnection.Close();
+
+            sqlConnection.Open();
             if (!userIsInDb)
             {
                 string insertString = "Insert Into Webinarteilnehmer VALUES(@userName, @userMail)";
