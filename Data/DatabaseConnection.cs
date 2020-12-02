@@ -64,7 +64,7 @@ namespace EchoBot.DatabaseAccess
 
         }
 
-        public void InsertIntoConnectionTable(int terminId, string userId)
+        public void InsertIntoConnectionTable(string terminId, string userId)
         {
             sqlConnection.Open();
             string commandString = "INSERT INTO Termine2Teilnehmer VALUES(@terminId, @userId)";
