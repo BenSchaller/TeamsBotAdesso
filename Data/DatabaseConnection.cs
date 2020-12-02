@@ -47,7 +47,7 @@ namespace EchoBot.DatabaseAccess
             return userId;
         }
 
-        public bool DidUserBookWebinar(int terminId, string userId)
+        public bool DidUserBookWebinar(string terminId, string userId)
         {
 
             sqlConnection.Open();

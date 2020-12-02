@@ -52,7 +52,7 @@ namespace EchoBot.Logic
                     string[] items = new string[10];
                     items = value.Split('"');
                     string terminId = items[7];
-                    int termId = Int32.Parse(terminId);
+                    string termId = terminId;
                     var dbConnection = new DatabaseConnection();
 
                     var member = await TeamsInfo.GetMemberAsync(turnContext, turnContext.Activity.From.Id, cancellationToken);
