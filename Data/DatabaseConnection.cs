@@ -58,9 +58,10 @@ namespace EchoBot.DatabaseAccess
             checkIfUserIsBookedCommand.Parameters.AddWithValue("@terminId", terminId);
             checkIfUserIsBookedCommand.Parameters.AddWithValue("@userId", userId);
             var result = checkIfUserIsBookedCommand.ExecuteReader();
+            bool userIsInTable = result.HasRows;
 
             sqlConnection.Close();
-            return result.HasRows;
+            return userIsInTable;
 
         }
 
