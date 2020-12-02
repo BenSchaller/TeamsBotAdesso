@@ -105,12 +105,12 @@ namespace EchoBot.DatabaseAccess
         {
             sqlConnection.Open();
 
-            string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR(60), Name) = @userName";
+            string selectString = "Select MailAdresse from Webinarteilnehmer where CONVERT(VARCHAR(60), MailAdresse) = @userMail";
             SqlCommand selectUserByMailCmd = new SqlCommand(selectString, sqlConnection);
-            selectUserByMailCmd.Parameters.AddWithValue("@userName", userName);
-            var result = selectUserByMailCmd.ExecuteReader();
-
-            if (result.HasRows == false)
+            selectUserByMailCmd.Parameters.AddWithValue("@userMail", userMail);
+            var userIsInDb = selectUserByMailCmd.ExecuteReader().HasRows;
+            
+            if (!userIsInDb)
             {
                 string insertString = "Insert Into Webinarteilnehmer VALUES(@userName, @userMail)";
                 SqlCommand insertUserCmd = new SqlCommand(insertString, sqlConnection);
